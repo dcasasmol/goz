@@ -22,10 +22,15 @@ SECRET_KEY = 'yxz!---3eq&^azfgc5&-$87&$405xd#m8_%mr9^gkh9*o@*uq3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = []
 
+ADMINS = (
+    # ('David Casas Molina', 'david.casasmolina@gmail.com'),
+)
+
+MANAGERS = ADMINS
 
 # Application definition
 
@@ -36,6 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'debug_toolbar',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -57,17 +63,31 @@ WSGI_APPLICATION = 'goz.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # Or path to database file if using sqlite3.
+        'NAME': 'goz_database',
+        # The following settings are not used with sqlite3:
+        'USER': 'django_goz',
+        'PASSWORD': 'U6NTQ3md',
+        # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'HOST': 'localhost',
+        # Set to empty string for default.
+        'PORT': '',
     }
 }
+
+# Django superuser info:
+# user: admin
+# email: admin@gameofzones.es
+# password: 6VKPYq3z
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-Es'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Madrid'
 
 USE_I18N = True
 
