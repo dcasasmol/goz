@@ -27,7 +27,7 @@ Sólo será necesario abrir en el navegador la dirección web (url) de la aplica
 
 Para obtener el código fuente se puede visitar el repositorio en GitHub del proyecto::
 
-    https://github.com/axte/gameofzones
+    https://github.com/dcasasmol/goz
 
 
 Documentación
