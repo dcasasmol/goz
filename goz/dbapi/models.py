@@ -1,7 +1,6 @@
 from django.db import models
 
 # Create your models here.
-# TODO Export variables to config file.
 
 class User(models.Model):
   MALE = 'ma'
