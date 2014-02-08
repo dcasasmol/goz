@@ -1,0 +1,53 @@
+{# templates/base.html #}
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="content-language" content="{{ LANGUAGE_CODE }}">
+    <meta name="keywords" content="gameofzones, goz, game of zones, foursquare, foursquare game, django, axte, axterciyo, David Casas Molina, David Casas, UCA, Universidad de Cádiz"/>
+    <meta name="description" content="Conquer whatever you want! or...whatever you can..."/>
+    {% block extrameta %}
+    {% endblock extrameta %}
+
+    <title>Game of Zones - Conquer whatever you want! or...whatever you can...</title>
+    {% comment %} <link rel="shortcut icon" href="{% static "img/favicon.ico" %}" type="image/gif"/> {% endcomment %}
+
+    {% block cssstyles %}
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet" media="all" type="text/css"/>
+    <link href="{% static "css/styles.css" %}" rel="stylesheet" media="all" type="text/css"/>
+    {% block extracss %}
+    {% endblock extracss %}
+    {% endblock cssstyles %}
+
+    {% block jsscripts %}
+    {% block extrajs %}
+    {% endblock extrajs %}
+    {% endblock jsscripts %}
+  </head>
+  <body dir="ltr" {% block extrabodytag %}{% endblock extrabodytag %}>
+    {% block bodywrapper %}
+    <div id="header" class="row-fluid">
+      {% block header %}
+      {% include "header.html" %}
+      {% block extraheader %}
+      {% endblock extraheader %}
+      {% endblock header %}
+    </div>
+    <div id="content-wrapper" class="row-fluid">
+      <div class="span12">
+        {% block contentbody %}
+        {% endblock contentbody %}
+      </div>
+    </div>
+    <div id="footer" class="row-fluid">
+      {% block footer %}
+      {% include "footer.html" %}
+      {% endblock footer %}
+      {% block extrafooter %}
+      {% endblock extrafooter %}
+    </div>
+    {% endblock bodywrapper %}
+  </body>
+</html>
