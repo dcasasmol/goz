@@ -1,10 +1,13 @@
 {# templates/login.html #}
+
 {% extends "base.html" %}
+{% load staticfiles %}
 
 {% block contentbody %}
 <div class="span8 offset2 login">
-  <a href="{% url 'oauth_auth' %}" title="Connect to Foursquare">
-    <img src="{% static "img/foursquare-login.png" %}" alt="Login" /Login>
+  {% comment %} <a href="{% url 'oauth_auth' %}" title="Connect to Foursquare"> {% endcomment %}
+  <a href="https://www.google.es" title="Connect to Foursquare">
+    <img src="{% static "img/fs-login.png" %}" alt="Login" />
   </a>
 </div>
 {% endblock %}
