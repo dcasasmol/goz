@@ -1,15 +1,6 @@
 # goz/views.py
 
-from django.http import Http404
-from django.shortcuts import render
+from django.views.generic import TemplateView
 
-from utils.debug import handle_exception
-
-def login(request):
-  try:
-    context = {}
-
-    return render(request, 'login.html', context)
-  except:
-    handle_exception()
-    raise Http404
+class login(TemplateView):
+  template_name = 'login.html'

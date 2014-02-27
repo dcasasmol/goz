@@ -9,7 +9,7 @@ urlpatterns = patterns('',
     # url(r'^$', 'goz.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'^$', login, name='login'),
+    url(r'^$', login.as_view(), name='login'),
     url(r'^admin/', include(admin.site.urls)),
 #    url(r'^fsapi/', include(foursquareapi.urls)),
 )
