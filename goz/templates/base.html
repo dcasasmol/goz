@@ -1,6 +1,10 @@
 {# templates/base.html #}
 
+{% load i18n %}
 {% load staticfiles %}
+
+{% get_current_language as LANGUAGE_CODE %}
+<!-- Current language: {{ LANGUAGE_CODE }} -->
 
 <!DOCTYPE html>
 <html>
@@ -8,11 +12,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta http-equiv="content-language" content="{{ LANGUAGE_CODE }}">
     <meta name="keywords" content="gameofzones, goz, game of zones, foursquare, foursquare game, django, axte, axterciyo, David Casas Molina, David Casas, UCA, Universidad de Cádiz"/>
-    <meta name="description" content="Conquer whatever you want! or...whatever you can..."/>
+    <meta name="description" content="{% trans "APP_DESCRIPTION" %}"/>
     {% block extrameta %}
     {% endblock extrameta %}
 
-    <title>Game of Zones - Conquer whatever you want! or...whatever you can...</title>
+    <title>{% trans "APP_NAME" %} - {% trans "APP_DESCRIPTION" %}</title>
     {% comment %} <link rel="shortcut icon" href="{% static "img/favicon.ico" %}" type="image/gif"/> {% endcomment %}
 
     {% block cssstyles %}

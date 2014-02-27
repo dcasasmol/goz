@@ -1,13 +1,14 @@
 {# templates/login.html #}
 
 {% extends "base.html" %}
+{% load i18n %}
 {% load staticfiles %}
 
 {% block contentbody %}
 <div class="span8 offset2 login">
-  {% comment %} <a href="{% url 'oauth_auth' %}" title="Connect to Foursquare"> {% endcomment %}
-  <a href="https://www.google.es" title="Connect to Foursquare">
-    <img src="{% static "img/fs-login.png" %}" alt="Login" />
+  {% comment %} <a href="{% url 'oauth_auth' %}" title="{% trans "LOGIN_FS_TITLE" %}"> {% endcomment %}
+    <a href="https://www.google.es" title="{% trans "LOGIN_FS_TITLE" %}">
+      <img src="{% static "img/fs-login.png" %}" alt="{% trans "LOGIN_FS_ALT" %}" />
   </a>
 </div>
 {% endblock %}

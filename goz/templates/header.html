@@ -1,5 +1,6 @@
 {# templates/header.html #}
 
+{% load i18n %}
 {% load staticfiles %}
 
 <div class="span2 offset2 logo">
@@ -8,5 +9,5 @@
   </a>
 </div>
 <div class="span4 offset1 slogan">
-  <h1>Game of Zones: Cadiz City</h1>
+  <h1>{% trans "APP_NAME" %}: {% trans "HEAD_SLOGAN" %}</h1>
 </div>
