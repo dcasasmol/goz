@@ -1,130 +1,290 @@
-/* Base styles. */
-html {
-   background-color: #63dc90;
+/* Base styles */
+
+html,
+body {
+  height: 100%;
+  /* The html and body elements cannot have any padding or margin. */
+}
+
+code {
+  font-size: 80%;
 }
 
 
-/* Header and footer styles. */
-#header {
-    background-color: #63dc90;
-    border-bottom: 20px solid #238b49;
-    position: relative;
+/*# Body styles #*/
+
+/* Wrapper for page content to push down footer */
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  /* Negative indent footer by its height */
+  margin: 0 auto -55px;
+  /* Pad bottom by footer height */
+  padding: 0 0 55px;
 }
 
-.logo {
-    margin-bottom: 10px;
+#wrap > .container {
+  padding: 55px 15px 0;
 }
 
-.slogan h1 {
-    margin-top: 50px;
-    margin-bottom: 20px;
-    font-family: serif;
-    font-weight: bold;
-    font-size: 21px;
-    font-style: italic;
-    color: #238b49;
-    text-align: center;
-    margin-bottom: 5px;
+
+/*# Header and footer styles #*/
+
+/* navbar */
+.navbar-default {
+  background-color: #63dc90; /* Light Green */
+  border-color: #238b49; /* Dark Green */
 }
 
+/* title */
+.navbar-default .navbar-brand {
+  color: #238b49; /* Dark Green */
+  font-style: italic;
+  font-weight: bold;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: #238b49; /* Dark Green */
+  font-style: italic;
+  font-weight: bold;
+}
+
+/* link */
+.navbar-default .navbar-nav > li > a {
+  color: #238b49; /* Dark Green */
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #63dc90; /* Light Green */
+  background-color: #238b49; /* Dark Green */
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+  color: #63dc90; /* Light Green */
+  background-color: #238b49; /* Dark Green */
+}
+
+/* caret */
+.navbar-default .navbar-nav > .dropdown > a .caret {
+  border-top-color: #238b49; /* Dark Green */
+  border-bottom-color: #238b49; /* Dark Green */
+}
+.navbar-default .navbar-nav > .dropdown > a:hover .caret,
+.navbar-default .navbar-nav > .dropdown > a:focus .caret {
+  border-top-color: #238b49; /* Dark Green */
+  border-bottom-color: #238b49; /* Dark Green */
+}
+.navbar-default .navbar-nav > .open > a .caret,
+.navbar-default .navbar-nav > .open > a:hover .caret,
+.navbar-default .navbar-nav > .open > a:focus .caret {
+  border-top-color: #238b49; /* Dark Green */
+  border-bottom-color: #238b49; /* Dark Green */
+}
+
+/* mobile version */
+.navbar-default .navbar-toggle {
+  border-color: #238b49; /* Dark Green */
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: #238b49; /* Dark Green */
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #238b49; /* Dark Green */
+}
+.navbar-default .navbar-toggle:hover .icon-bar,
+.navbar-default .navbar-toggle:focus .icon-bar {
+  background-color: #63dc90; /* Light Green */
+}
+.navbar-default .navbar-nav .open .dropdown-menu {
+  border-color: #238b49; /* Dark Green */
+  background-color: #63dc90; /* Light Green */
+}
+.navbar-default .navbar-nav .open .dropdown-menu .divider {
+  background-color: #238b49; /* Dark Green */
+}
+.navbar-default .navbar-nav .open .dropdown-menu > li > a {
+  color: #238b49; /* Dark Green */
+  background-color: #63dc90; /* Light Green */
+}
+.navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+.navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+  color: #63dc90; /* Light Green */
+  background-color: #238b49; /* Dark Green */
+}
+.navbar-default .navbar-nav .open .dropdown-menu > li > form > a {
+  display: block;
+  padding: 3px 20px;
+  color: #238b49; /* Dark Green */
+  background-color: #63dc90; /* Light Green */
+  text-decoration: none;
+}
+.navbar-default .navbar-nav .open .dropdown-menu > li > form > a:hover,
+.navbar-default .navbar-nav .open .dropdown-menu > li > form > a:focus {
+  color: #63dc90; /* Light Green */
+  background-color: #238b49; /* Dark Green */
+}
+
+
+/* Set the fixed height of the footer here */
 #footer {
-    background-color: #63dc90;
-    border-top: 20px solid #238b49;
+  height: 55px;
+  background-color: #63dc90; /* Light Green */
 }
 
-.info a,p {
-    margin-top: 10px;
-    font-weight: bold;
-    font-size: 12px;
-    color: #238b49;
+#footer > .container {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.container .credit {
+  margin: 10px 0;
+}
+
+.goz-text {
+  font-weight: bold;
+  font-size: 12px;
+  color: #238b49; /* Dark Green */
+}
+
+.goz-text > a {
+  color: #238b49; /* Dark Green */
+}
+
+.goz-logo {
+  margin-top: -15px;
+  width: inherit;
+  height: inherit;
 }
 
 
-/* Body styles. */
-#content-wrapper {
-    background-color: #e4e4e4;
-}
+/* /1* Header and footer styles. *1/ */
+/* #header { */
+/*     background-color: #63dc90; */
+/*     border-bottom: 20px solid #238b49; */
+/*     position: relative */
+/* } */
+
+/* .logo { */
+/* } */
+
+/* .slogan { */
+/*     font-family: serif; */
+/*     font-weight: bold; */
+/*     font-size: 21px; */
+/*     font-style: italic; */
+/*     color: #238b49; */
+/*     text-align: center; */
+/* } */
+
+/* #footer { */
+/*     background-color: #63dc90; /1* White Green *1/ */
+/*     border-top: 20px solid #238b49; /1* Dark Green *1/ */
+/* } */
+
+/* .info a,p { */
+/*     text-align: center; */
+/*     margin-top: 10px; */
+/*     font-weight: bold; */
+/*     font-size: 12px; */
+/*     color: #238b49; /1* Dark Green *1/ */
+/* } */
 
 
-/* Login page styles. */
-.login {
-    margin: 20px 0;
-    text-align: center;
-    padding: 100px 0px;
-    background-color: #238b49;
-    border-radius: 10px;
-}
+/* /1* Body styles. *1/ */
+/* #content-wrapper { */
+/*     background-color: #e4e4e4; */
+/*     min-height: 100%; */
+/*     height: auto !important; */
+/*     height: 100%; */
+/*     /1* Negative indent footer by its height *1/ */
+/*     margin: 0 auto -40px; */
+/*     /1* Pad bottom by footer height *1/ */
+/*     padding: 0 0 40px; */
+/* } */
 
-.login a img {
-    box-shadow: 1px 1px 10px #65E080;
-}
+
+/* /1* Login page styles. *1/ */
+/* .login { */
+/*     margin: 20px 0; */
+/*     text-align: center; */
+/*     padding: 100px 0px; */
+/*     background-color: #238b49; */
+/*     border-radius: 10px; */
+/* } */
+
+/* .login a img { */
+/*     box-shadow: 1px 1px 10px #65E080; */
+/* } */
 
 
-/* Map page styles. */
-#map {
-    width: 100%;
-    height: 516px;
-    border: solid 2px #808080;
-}
+/* /1* Map page styles. *1/ */
+/* #map { */
+/*     width: 100%; */
+/*     height: 516px; */
+/*     border: solid 2px #808080; */
+/* } */
 
-#map img {
-    max-width: none;
-}
+/* #map img { */
+/*     max-width: none; */
+/* } */
 
-#map label {
-    width: auto; display:inline;
-}
+/* #map label { */
+/*     width: auto; display:inline; */
+/* } */
 
-#key-open {
-    text-align: center;
-    display: none;
-    margin-left: 8.5%;
-    position: absolute;
-    bottom: -25px;
-    width: 350px;
-    height: 25px;
-    cursor: pointer;
-}
+/* #key-open { */
+/*     text-align: center; */
+/*     display: none; */
+/*     margin-left: 8.5%; */
+/*     position: absolute; */
+/*     bottom: -25px; */
+/*     width: 350px; */
+/*     height: 25px; */
+/*     cursor: pointer; */
+/* } */
 
-#key-close {
-    text-align: center;
-    margin-left: 8.5%;
-    position: absolute;
-    bottom: -25px;
-    width: 350px;
-    height: 25px;
-    cursor: pointer;
-}
+/* #key-close { */
+/*     text-align: center; */
+/*     margin-left: 8.5%; */
+/*     position: absolute; */
+/*     bottom: -25px; */
+/*     width: 350px; */
+/*     height: 25px; */
+/*     cursor: pointer; */
+/* } */
 
-.arrow {
-    vertical-align:middle;
-    width: 5%;
-    height: 45%;
-}
+/* .arrow { */
+/*     vertical-align:middle; */
+/*     width: 5%; */
+/*     height: 45%; */
+/* } */
 
-#container-key {
-    margin-left: 10%;
-    position: absolute;
-    top: inherit;
-    width: 350px;
-}
+/* #container-key { */
+/*     margin-left: 10%; */
+/*     position: absolute; */
+/*     top: inherit; */
+/*     width: 350px; */
+/* } */
 
-#key {
-    background-color: #238b49;
-    border-radius: 0 0 20px 20px;
-    padding: 0px 6px 0px 5px;
-    width: inherit;
-}
+/* #key { */
+/*     background-color: #238b49; */
+/*     border-radius: 0 0 20px 20px; */
+/*     padding: 0px 6px 0px 5px; */
+/*     width: inherit; */
+/* } */
 
-.key-background {
-    background-color: #63dc90;
-    border-radius: 20px 20px 20px 20px;
-    margin: 0;
-}
+/* .key-background { */
+/*     background-color: #63dc90; */
+/*     border-radius: 20px 20px 20px 20px; */
+/*     margin: 0; */
+/* } */
 
-.key-item {
-    margin: 10px;
-    padding: 10px;
-    background-color: #9EFFBB;
-    border-radius: 20px;
-}
+/* .key-item { */
+/*     margin: 10px; */
+/*     padding: 10px; */
+/*     background-color: #9EFFBB; */
+/*     border-radius: 20px; */
+/* } */

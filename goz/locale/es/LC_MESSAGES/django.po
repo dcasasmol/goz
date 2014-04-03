@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-27 18:14+0100\n"
+"POT-Creation-Date: 2014-04-04 00:35+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: David Casas Molina <david.casasmolina@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,34 +18,80 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: templates/base.html:15 templates/base.html.py:19
+#: templates/base.html:17 templates/base.html.py:21
 msgid "APP_DESCRIPTION"
 msgstr "Conquista lo que quieras! o..lo que puedas..."
 
-#: templates/base.html:19 templates/header.html:12
+#: templates/base.html:21 templates/header.html:16
 msgid "APP_NAME"
 msgstr "Game of Zones"
 
-#: templates/footer.html:6
+#: templates/footer.html:7
 msgid "FOO_DESC"
 msgstr "Aplicación Web diseñada por"
 
-#: templates/footer.html:6
+#: templates/footer.html:7
 msgid "FOO_USING"
 msgstr "usando"
 
-#: templates/footer.html:6
+#: templates/footer.html:7
 msgid "FOO_AND"
 msgstr "y"
 
-#: templates/header.html:12
+#: templates/header.html:15 templates/header.html.py:21
+msgid "TAB_HOME"
+msgstr "Inicio"
+
+#: templates/header.html:16 templates/header.html.py:17
 msgid "HEAD_SLOGAN"
 msgstr "Cadiz"
 
-#: templates/login.html:11
-msgid "LOGIN_FS_TITLE"
-msgstr "Conéctate a Foursquare"
+#: templates/header.html:17
+msgid "APP_ACRON"
+msgstr "GoZ"
 
-#: templates/login.html:12
-msgid "LOGIN_FS_ALT"
-msgstr "Login"
+#: templates/header.html:22
+msgid "TAB_SHOP"
+msgstr "Tienda"
+
+#: templates/header.html:23
+msgid "TAB_MAP"
+msgstr "Mapa"
+
+#: templates/header.html:27
+msgid "SETT_LANG"
+msgstr "Idioma"
+
+#: templates/header.html:33
+msgid "English"
+msgstr "Inglés"
+
+#: templates/header.html:33
+msgid "Spanish"
+msgstr "Español"
+
+#: templates/header.html:42
+msgid "SETT_PROFILE"
+msgstr "Editar perfil"
+
+#: templates/header.html:43
+msgid "SETT_CONFIG"
+msgstr "Configuración"
+
+#: templates/header.html:45
+msgid "SETT_HELP"
+msgstr "Ayuda"
+
+#: templates/header.html:46
+msgid "SETT_REPORT"
+msgstr "Informar de un problema"
+
+#: templates/header.html:48
+msgid "SETT_LOGOUT"
+msgstr "Cerrar sesión"
+
+#~ msgid "LOGIN_FS_TITLE"
+#~ msgstr "Conéctate a Foursquare"
+
+#~ msgid "LOGIN_FS_ALT"
+#~ msgstr "Login"
