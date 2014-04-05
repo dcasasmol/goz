@@ -27,6 +27,21 @@ code {
 #wrap > .container {
   padding: 55px 15px 0;
 }
+.wrapbar-up {
+  height: 20px;
+  width: 100%;
+  position: absolute;
+  background-color: #238b49; /* Dark Green */
+  top: 50px;
+}
+.wrapbar-down {
+  height: 20px;
+  width: 100%;
+  position: absolute;
+  background-color: #238b49; /* Dark Green */
+  top: 100%;
+  margin-top: -75px;
+}
 
 
 /*# Header and footer styles #*/
@@ -172,9 +187,14 @@ code {
 
 
 /*# Responsive actions #*/
-@media all and (max-width:25em) {
+@media all and (max-height:30em) {
   .login {
     top: 30%;
+  }
+}
+@media all and (max-width:25em) {
+  .login {
+    top: 25%;
   }
   .navbar-default .navbar-brand {
     margin-right: -10px;
