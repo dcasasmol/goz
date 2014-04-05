@@ -5,10 +5,11 @@
 {% load staticfiles %}
 
 {% block contentbody %}
-<div class="span8 offset2 login">
+<!-- Begin page content -->
+<div class="container login">
   {% comment %} <a href="{% url 'oauth_auth' %}" title="{% trans "LOGIN_FS_TITLE" %}"> {% endcomment %}
-    <a href="https://www.google.es" title="{% trans "LOGIN_FS_TITLE" %}">
-      <img src="{% static "img/fs-login.png" %}" alt="{% trans "LOGIN_FS_ALT" %}" />
+  <a href="https://www.google.es" title="{% trans "LOGIN_FS_TITLE" %}">
+    <img src="{% static "img/fs-login.png" %}" alt="{% trans "LOGIN_FS_ALT" %}" />
   </a>
 </div>
-{% endblock %}
+{% endblock contentbody %}
