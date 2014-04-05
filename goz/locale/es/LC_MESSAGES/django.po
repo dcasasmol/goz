@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-04 00:35+0200\n"
+"POT-Creation-Date: 2014-04-05 14:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: David Casas Molina <david.casasmolina@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -62,14 +62,6 @@ msgstr "Mapa"
 msgid "SETT_LANG"
 msgstr "Idioma"
 
-#: templates/header.html:33
-msgid "English"
-msgstr "Inglés"
-
-#: templates/header.html:33
-msgid "Spanish"
-msgstr "Español"
-
 #: templates/header.html:42
 msgid "SETT_PROFILE"
 msgstr "Editar perfil"
@@ -90,8 +82,16 @@ msgstr "Informar de un problema"
 msgid "SETT_LOGOUT"
 msgstr "Cerrar sesión"
 
-#~ msgid "LOGIN_FS_TITLE"
-#~ msgstr "Conéctate a Foursquare"
+#: templates/login.html:12
+msgid "LOGIN_FS_TITLE"
+msgstr "Conéctate a Foursquare"
 
-#~ msgid "LOGIN_FS_ALT"
-#~ msgstr "Login"
+#: templates/login.html:13
+msgid "LOGIN_FS_ALT"
+msgstr "Login"
+
+#~ msgid "English"
+#~ msgstr "Inglés"
+
+#~ msgid "Spanish"
+#~ msgstr "Español"

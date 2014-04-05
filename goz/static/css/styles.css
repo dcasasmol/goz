@@ -1,7 +1,8 @@
-/* Base styles */
+/*# Base styles #*/
 
 html,
 body {
+  background-color: #e4e4e4; /* Grey */
   height: 100%;
   /* The html and body elements cannot have any padding or margin. */
 }
@@ -23,7 +24,6 @@ code {
   /* Pad bottom by footer height */
   padding: 0 0 55px;
 }
-
 #wrap > .container {
   padding: 55px 15px 0;
 }
@@ -127,32 +127,26 @@ code {
   background-color: #238b49; /* Dark Green */
 }
 
-
-/* Set the fixed height of the footer here */
+/* footer */
 #footer {
   height: 55px;
   background-color: #63dc90; /* Light Green */
 }
-
 #footer > .container {
   padding-left: 15px;
   padding-right: 15px;
 }
-
 .container .credit {
   margin: 10px 0;
 }
-
 .goz-text {
   font-weight: bold;
   font-size: 12px;
   color: #238b49; /* Dark Green */
 }
-
 .goz-text > a {
   color: #238b49; /* Dark Green */
 }
-
 .goz-logo {
   margin-top: -15px;
   width: inherit;
@@ -160,64 +154,44 @@ code {
 }
 
 
-/* /1* Header and footer styles. *1/ */
-/* #header { */
-/*     background-color: #63dc90; */
-/*     border-bottom: 20px solid #238b49; */
-/*     position: relative */
-/* } */
-
-/* .logo { */
-/* } */
-
-/* .slogan { */
-/*     font-family: serif; */
-/*     font-weight: bold; */
-/*     font-size: 21px; */
-/*     font-style: italic; */
-/*     color: #238b49; */
-/*     text-align: center; */
-/* } */
-
-/* #footer { */
-/*     background-color: #63dc90; /1* White Green *1/ */
-/*     border-top: 20px solid #238b49; /1* Dark Green *1/ */
-/* } */
-
-/* .info a,p { */
-/*     text-align: center; */
-/*     margin-top: 10px; */
-/*     font-weight: bold; */
-/*     font-size: 12px; */
-/*     color: #238b49; /1* Dark Green *1/ */
-/* } */
+/*# Login page styles #*/
+.login {
+  width: 90%;
+  height: 150px;
+  text-align: center;
+  background-color: #238b49; /* Dark Green */
+  border-radius: 15px;
+  position: absolute;
+  top: 40%;
+  left: 5%;
+}
+.login > a > img {
+  box-shadow: 1px 1px 10px #65E080;
+}
 
 
-/* /1* Body styles. *1/ */
-/* #content-wrapper { */
-/*     background-color: #e4e4e4; */
-/*     min-height: 100%; */
-/*     height: auto !important; */
-/*     height: 100%; */
-/*     /1* Negative indent footer by its height *1/ */
-/*     margin: 0 auto -40px; */
-/*     /1* Pad bottom by footer height *1/ */
-/*     padding: 0 0 40px; */
-/* } */
 
-
-/* /1* Login page styles. *1/ */
-/* .login { */
-/*     margin: 20px 0; */
-/*     text-align: center; */
-/*     padding: 100px 0px; */
-/*     background-color: #238b49; */
-/*     border-radius: 10px; */
-/* } */
-
-/* .login a img { */
-/*     box-shadow: 1px 1px 10px #65E080; */
-/* } */
+/*# Responsive actions #*/
+@media all and (max-width:25em) {
+  .login {
+    top: 30%;
+  }
+  .navbar-default .navbar-brand {
+    margin-right: -10px;
+    font-size: 1em;
+  }
+}
+@media all and (max-width:23em) {
+  .login > a > img {
+    width: 200px;
+  }
+}
+@media all and (max-width:22em) {
+  .navbar-default .navbar-brand {
+    margin-right: -25px;
+    font-size: 0.9em;
+  }
+}
 
 
 /* /1* Map page styles. *1/ */
