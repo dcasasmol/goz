@@ -12,7 +12,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/" title="{% trans "TAB_HOME" %}"><img class="img-responsive goz-logo" src="{% static "img/goz-logo.png" %}" alt="Home"/></a>
+      <a class="navbar-brand" href="{% url 'home' %}" title="{% trans "TAB_HOME" %}"><img class="img-responsive goz-logo" src="{% static "img/goz-logo.png" %}" alt="Home"/></a>
       <span class="navbar-brand">{% trans "APP_NAME" %}: {% trans "HEAD_SLOGAN" %}</span>
       <!-- <span class="navbar-brand">{% trans "APP_ACRON" %}: {% trans "HEAD_SLOGAN" %}</span> -->
     </div>
@@ -36,8 +36,9 @@
             {% endfor %}
           </ul>
         </li>
+        {% if username %}
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Name<b class="caret"></b></a>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ username }}<b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li><a href="#" title="{% trans "SETT_PROFILE" %}">{% trans "SETT_PROFILE" %}</a></li>
             <li><a href="#" title="{% trans "SETT_CONFIG" %}">{% trans "SETT_CONFIG" %}</a></li>
@@ -45,9 +46,10 @@
             <li><a href="#" title="{% trans "SETT_HELP" %}">{% trans "SETT_HELP" %}</a></li>
             <li><a href="#" title="{% trans "SETT_REPORT" %}">{% trans "SETT_REPORT" %}</a></li>
             <li class="divider"></li>
-            <li><a href="#" title="{% trans "SETT_LOGOUT" %}">{% trans "SETT_LOGOUT" %}</a></li>
+            <li><a href="{% url 'oauth_unauth' %}" title="{% trans "SETT_LOGOUT" %}">{% trans "SETT_LOGOUT" %}</a></li>
           </ul>
         </li>
+        {% endif %}
       </ul>
     </div><!--/.nav-collapse -->
   </div>
