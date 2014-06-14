@@ -71,10 +71,16 @@ class Categorie(models.Model):
   icon = models.SlugField(max_length=255)
   creation_date = models.DateTimeField(auto_now_add=True)
   last_update = models.DateTimeField(auto_now=True)
+  active = models.BooleanField(default=True)
 
   def __str__(self):
     return self.name
 
+  @property
+  def is_active(self):
+    return self.active
+
+  @property
   def num_venues(self):
     return self.venues.count()
 
@@ -94,6 +100,7 @@ class Zone(models.Model):
   scores = models.ManyToManyField(User, through='Score')
   creation_date = models.DateTimeField(auto_now_add=True)
   last_update = models.DateTimeField(auto_now=True)
+  active = models.BooleanField(default=True)
 
   class Meta:
     ordering = ['id']
@@ -101,9 +108,15 @@ class Zone(models.Model):
   def __str__(self):
     return self.name
 
+  @property
+  def is_active(self):
+    return self.active
+
+  @property
   def num_venues(self):
     return self.venues.count()
 
+  @property
   def total_score(self):
     return self.scores.filter(zone=self).aggregate(sum=Sum('points'))['sum']
 
@@ -123,10 +136,16 @@ class Venue(models.Model):
   checkins = models.ManyToManyField(User, through='Checkin')
   creation_date = models.DateTimeField(auto_now_add=True)
   last_update = models.DateTimeField(auto_now=True)
+  active = models.BooleanField(default=True)
 
   def __str__(self):
     return self.name
 
+  @property
+  def is_active(self):
+    return self.active
+
+  @property
   def num_checkins(self):
     return self.checkins.filter(venue=self).count()
 
@@ -145,10 +164,16 @@ class Item(models.Model):
   purchasers = models.ManyToManyField(User, through='Purchase')
   creation_date = models.DateTimeField(auto_now_add=True)
   last_update = models.DateTimeField(auto_now=True)
+  active = models.BooleanField(default=True)
 
   def __str__(self):
     return self.name
 
+  @property
+  def is_active(self):
+    return self.active
+
+  @property
   def num_purchaser(self):
     return self.purchasers.filter(item=self).count()
 
@@ -163,6 +188,7 @@ class Badge(models.Model):
   unlockings = models.ManyToManyField(User, through='Unlocking')
   creation_date = models.DateTimeField(auto_now_add=True)
   last_update = models.DateTimeField(auto_now=True)
+  active = models.BooleanField(default=True)
 
   class Meta:
     ordering = ['level']
@@ -170,6 +196,11 @@ class Badge(models.Model):
   def __str__(self):
     return self.name
 
+  @property
+  def is_active(self):
+    return self.active
+
+  @property
   def num_unlockings(self):
     return self.unlockings.filter(badge=self).count()
 
