@@ -32,23 +32,37 @@ class User(models.Model):
   def __str__(self):
     return '%s %s' % (self.first_name, self.last_name)
 
+  @property
   def num_friends(self):
     return self.friends.count()
 
+  @property 
   def num_kingdoms(self):
     return self.kingdoms.count()
 
+  @property
   def scores(self):
     return self.scores.filter(user=self).aggregate(sum=Sum('points'))['sum']
 
+  @property
   def num_purchases(self):
     return self.purchases.filter(user=self).count()
 
+  @property
   def num_checkins(self):
     return self.checkins.filter(user=self).count()
 
+  @property
   def num_badges(self):
     return self.badges.filter(user=self).count()
+
+  @property
+  def is_male(self):
+    return self.gender == MALE
+
+  @property
+  def is_female(self):
+    return self.gender == FEMALE
 
 
 class Categorie(models.Model):
@@ -177,6 +191,7 @@ class Score(models.Model):
   def __str__(self):
     return '%s:%s [%s]' % (self.user, self.zone, self.points)
 
+  @property
   def is_king(self):
     return self.zone in self.user.kingdoms
 
@@ -199,6 +214,10 @@ class Checkin(models.Model):
   def __str__(self):
     return '%s:%s [%s]' % (self.user, self.venue, self.number)
 
+  @property
+  def is_processed(self):
+    return self.process
+
 
 class Purchase(models.Model):
   id = models.CharField(max_length=255, primary_key=True)
@@ -216,6 +235,11 @@ class Purchase(models.Model):
 
   def __str__(self):
     return '%s:%s [%s]' % (self.user, self.item, self.number)
+
+  # TODO
+  @property
+  def is_expired(self):
+    pass
 
 
 class Unlocking(models.Model):
@@ -268,9 +292,19 @@ class Event(models.Model):
                             related_query_name='event')
   creation_date = models.DateTimeField(auto_now_add=True)
   last_update = models.DateTimeField(auto_now=True)
+  active = models.BooleanField(default=True)
 
   class Meta:
     ordering = ['-status', 'end_date']
 
   def __str__(self):
     return self.name
+
+  @property
+  def is_active(self):
+    return self.active
+
+  # TODO
+  @property
+  def is_expired(self):
+    pass
