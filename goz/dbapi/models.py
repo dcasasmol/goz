@@ -1,6 +1,9 @@
+# dbapi/models.py
+
+import datetime
+
 from django.db import models
 
-# Create your models here.
 
 class User(models.Model):
   MALE = 'ma'
@@ -58,11 +61,11 @@ class User(models.Model):
 
   @property
   def is_male(self):
-    return self.gender == MALE
+    return self.gender == self.MALE
 
   @property
   def is_female(self):
-    return self.gender == FEMALE
+    return self.gender == self.FEMALE
 
 
 class Categorie(models.Model):
@@ -267,10 +270,12 @@ class Purchase(models.Model):
   def __str__(self):
     return '%s:%s [%s]' % (self.user, self.item, self.number)
 
-  # TODO
   @property
   def is_expired(self):
-    pass
+    today = datetime.datetime.today()
+    delta = datetime.timedelta(days=self.item.duration)
+
+    return (self.creation_date + delta) < today if self.creation_date else None
 
 
 class Unlocking(models.Model):
@@ -335,7 +340,14 @@ class Event(models.Model):
   def is_active(self):
     return self.active
 
-  # TODO
   @property
   def is_expired(self):
-    pass
+    return self.end_date < datetime.datetime.today() if self.end_date else None
+
+  @property
+  def is_started(self):
+    return self.start_date < datetime.datetime.today() if self.start_date else None
+
+  @property
+  def is_live(self):
+    return self.is_started and not self.is_expired
