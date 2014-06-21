@@ -16,12 +16,15 @@ class User(models.Model):
   )
 
   id = models.CharField(max_length=255, primary_key=True)
+  # user = models.OneToOneField(djangoUser, related_name='goz_user')
+  # username = models.CharField(max_length=255, unique=True)
+  # password = models.CharField(max_length=255)
   first_name = models.CharField(max_length=255)
   last_name = models.CharField(max_length=255)
   gender = models.CharField(max_length=2,
                             choices=GENDER_CHOICES,
                             default=NOT_AVAILABLE)
-  birth_date = models.DateField(blank=True)
+  birth_date = models.DateField(blank=True, null=True, default=None)
   photo = models.SlugField(max_length=255)
   city = models.CharField(max_length=255, blank=True)
   bio = models.TextField(blank=True)
