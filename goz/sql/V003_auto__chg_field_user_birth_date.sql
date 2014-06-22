@@ -1,4 +1,0 @@
-BEGIN;
-ALTER TABLE "dbapi_user" ALTER COLUMN "birth_date" DROP NOT NULL;
-
-COMMIT;
