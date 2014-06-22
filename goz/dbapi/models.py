@@ -3,6 +3,9 @@
 import datetime
 
 from django.db import models
+from django.contrib.auth.models import User as djangoUser
+
+from utils.views import generate_password
 
 
 class User(models.Model):
@@ -15,10 +18,10 @@ class User(models.Model):
     (FEMALE, 'TOKEN_FEMALE'),
   )
 
-  id = models.CharField(max_length=255, primary_key=True)
-  # user = models.OneToOneField(djangoUser, related_name='goz_user')
-  # username = models.CharField(max_length=255, unique=True)
-  # password = models.CharField(max_length=255)
+  id = models.AutoField(primary_key=True)
+  user = models.OneToOneField(djangoUser, related_name='goz_user')
+  username = models.CharField(max_length=255, unique=True)
+  password = models.CharField(max_length=255)
   first_name = models.CharField(max_length=255)
   last_name = models.CharField(max_length=255)
   gender = models.CharField(max_length=2,
@@ -35,8 +38,25 @@ class User(models.Model):
   creation_date = models.DateTimeField(auto_now_add=True)
   last_update = models.DateTimeField(auto_now=True)
 
+  # Override save to create/update django user model.
+  def save(self, *args, **kwargs):
+    if not self.user:
+      self.password = generate_password(size=8)
+
+      self.user = djangoUser.objects.create(username=self.username,
+                                            password=self.password)
+
+    self.user.first_name = self.first_name
+    self.user.last_name = self.last_name
+    self.user.email = self.email
+    self.user.save()
+
+    super(User, self).save(*args, **kwargs)
+
   def __str__(self):
-    return '%s %s' % (self.first_name, self.last_name)
+    return '[%s] %s %s' % (self.username,
+                           self.first_name,
+                           self.last_name)
 
   @property
   def num_friends(self):
@@ -70,9 +90,16 @@ class User(models.Model):
   def is_female(self):
     return self.gender == self.FEMALE
 
+  @property
+  def is_active(self):
+    return self.user.is_active
+
+  def is_friend(self, user):
+    return user in self.friends
+
 
 class Categorie(models.Model):
-  id = models.CharField(max_length=255, primary_key=True)
+  id = models.AutoField(primary_key=True)
   name = models.CharField(max_length=255)
   icon = models.SlugField(max_length=255)
   creation_date = models.DateTimeField(auto_now_add=True)
@@ -128,7 +155,7 @@ class Zone(models.Model):
 
 
 class Venue(models.Model):
-  id = models.CharField(max_length=255, primary_key=True)
+  id = models.AutoField(primary_key=True)
   name = models.CharField(max_length=255)
   lat = models.CharField(max_length=255)
   lng = models.CharField(max_length=255)
@@ -157,7 +184,7 @@ class Venue(models.Model):
 
 
 class Item(models.Model):
-  id = models.CharField(max_length=255, primary_key=True)
+  id = models.AutoField(primary_key=True)
   name = models.CharField(max_length=255)
   description = models.CharField(max_length=255)
   attack = models.SmallIntegerField(default=0)
@@ -185,7 +212,7 @@ class Item(models.Model):
 
 
 class Badge(models.Model):
-  id = models.CharField(max_length=255, primary_key=True)
+  id = models.AutoField(primary_key=True)
   name = models.CharField(max_length=255)
   description = models.CharField(max_length=255)
   unlock_message = models.CharField(max_length=255)
@@ -212,7 +239,7 @@ class Badge(models.Model):
 
 
 class Score(models.Model):
-  id = models.CharField(max_length=255, primary_key=True)
+  id = models.AutoField(primary_key=True)
   user = models.ForeignKey(User,
                           related_name='scores',
                           related_query_name='score')
@@ -234,7 +261,7 @@ class Score(models.Model):
 
 
 class Checkin(models.Model):
-  id = models.CharField(max_length=255, primary_key=True)
+  id = models.AutoField(primary_key=True)
   user = models.ForeignKey(User,
                           related_name='checkins',
                           related_query_name='checkin')
@@ -257,7 +284,7 @@ class Checkin(models.Model):
 
 
 class Purchase(models.Model):
-  id = models.CharField(max_length=255, primary_key=True)
+  id = models.AutoField(primary_key=True)
   user = models.ForeignKey(User,
                           related_name='purchases',
                           related_query_name='purchase')
@@ -282,7 +309,7 @@ class Purchase(models.Model):
 
 
 class Unlocking(models.Model):
-  id = models.CharField(max_length=255, primary_key=True)
+  id = models.AutoField(primary_key=True)
   user = models.ForeignKey(User,
                           related_name='badges',
                           related_query_name='badge')
@@ -306,7 +333,7 @@ class Event(models.Model):
     (OFF_EVENT, 'TOKEN_OFF'),
   )
 
-  id = models.CharField(max_length=255, primary_key=True)
+  id = models.AutoField(primary_key=True)
   name = models.CharField(max_length=255)
   description = models.CharField(max_length=255)
   start_date = models.DateField()
