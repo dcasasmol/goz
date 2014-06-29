@@ -3,6 +3,7 @@
 import datetime
 
 from django.db import models
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User as djangoUser
 
 from utils.views import generate_password
@@ -40,16 +41,19 @@ class User(models.Model):
 
   # Override save to create/update django user model.
   def save(self, *args, **kwargs):
-    if not self.user:
+    if not self.user_id:
       self.password = generate_password(size=8)
+      hashed_password = make_password(self.password)
 
       self.user = djangoUser.objects.create(username=self.username,
-                                            password=self.password)
+                                            password=hashed_password)
 
     self.user.first_name = self.first_name
     self.user.last_name = self.last_name
     self.user.email = self.email
     self.user.save()
+
+    self.gender = self.__process_gender(self.gender)
 
     super(User, self).save(*args, **kwargs)
 
@@ -58,11 +62,28 @@ class User(models.Model):
                            self.first_name,
                            self.last_name)
 
+  def __process_gender(self, raw_gender):
+    if raw_gender.lower() in ['male', 'masculine', 'man']:
+      gender = self.MALE
+    elif raw_gender.lower() in ['female', 'feminine', 'woman']:
+      gender = self.FEMALE
+    else:
+      gender = self.NOT_AVAILABLE
+
+    return gender
+
+  def is_friend(self, user):
+    return user in self.friends
+
+  @property
+  def full_name(self):
+    return self.user.get_full_name()
+
   @property
   def num_friends(self):
     return self.friends.count()
 
-  @property 
+  @property
   def num_kingdoms(self):
     return self.kingdoms.count()
 
@@ -93,9 +114,6 @@ class User(models.Model):
   @property
   def is_active(self):
     return self.user.is_active
-
-  def is_friend(self, user):
-    return user in self.friends
 
 
 class Categorie(models.Model):
