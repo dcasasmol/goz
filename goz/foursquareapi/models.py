@@ -35,8 +35,31 @@ class FsApi:
       return json_response
 
     except Exception as e:
-      print(e.traceback())
+      print(e.with_traceback(e.__traceback__))
 
   def get_user_info(self):
-    return self.request('users/self')
+    response = self.request('users/self')
 
+    user_info = {}
+    user_info['meta'] = response.get('meta', {})
+    user_info['response'] = {}
+
+    fs_response_info = response.get('response', {})
+    if fs_response_info:
+      fs_user_info = fs_response_info.get('user', {})
+      info = {
+        'username': fs_user_info.get('id', ''),
+        'first_name': fs_user_info.get('firstName', ''),
+        'last_name': fs_user_info.get('lastName', ''),
+        'gender': fs_user_info.get('gender', ''),
+        'photo': fs_user_info.get('photo', {}).get('suffix', ''),
+        'city': fs_user_info.get('homeCity', ''),
+        'bio': fs_user_info.get('bio', ''),
+        'email': fs_user_info.get('contact', {}).get('email', ''),
+        'twitter': fs_user_info.get('contact', {}).get('twitter', ''),
+        'facebook': fs_user_info.get('contact', {}).get('facebook', ''),
+      }
+
+      user_info['response'] = info
+
+    return user_info
