@@ -1,5 +1,6 @@
 # goz/views.py
 
+from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as django_login
@@ -12,6 +13,14 @@ from utils.mixins import LoginRequiredMixin
 
 class Index(TemplateView):
   template_name = 'login.html'
+
+  def get(self, request, *args, **kwargs):
+    context = self.get_context_data(**kwargs)
+
+    if request.user.is_authenticated():
+      return redirect('home')
+
+    return self.render_to_response(context)
 
 
 class Home(LoginRequiredMixin, TemplateView):
