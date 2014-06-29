@@ -17,6 +17,7 @@ class Index(TemplateView):
   def get(self, request, *args, **kwargs):
     context = self.get_context_data(**kwargs)
 
+    # Redirect to home if the user is logged.
     if request.user.is_authenticated():
       return redirect('home')
 
@@ -35,7 +36,7 @@ class Login(RedirectView):
     return reverse(self.url)
 
   def get(self, request, *args, **kwargs):
-    access_token = self.request.session.get('access_token', '')
+    access_token = self.request.session.get('login',{}).get('access_token','')
     if access_token:
       # Gets user info from fousquare api.
       api = FsApi(access_token)
@@ -47,7 +48,10 @@ class Login(RedirectView):
       # Logins in django User model.
       django_logged = self.__login_in_django(request, user)
 
-      self.request.session['login'] = {}
+      # Saves user info in session.
+      if not 'login' in self.request.session:
+        self.request.session['login'] = {}
+
       self.request.session['login']['user'] = {
         'username': user.username,
         'full_name': user.full_name,
@@ -107,8 +111,6 @@ class Logout(RedirectView):
     username = user_info.get('username', '')
     full_name = user_info.get('full_name', '')
 
-    if 'access_token' in self.request.session:
-      del self.request.session['access_token']
     if 'login'in self.request.session:
       del self.request.session['login']
 

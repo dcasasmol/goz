@@ -48,11 +48,14 @@ class FsCallback(RedirectView):
 
     # Gets the access_token.
     response = urllib.request.urlopen(req)
-    access_token = json.loads(response.read().decode('utf-8'))
-    access_token = access_token['access_token']
+    js_access_token = json.loads(response.read().decode('utf-8'))
+    access_token = js_access_token['access_token']
 
     # Stores the access_token for later use.
-    self.request.session['access_token'] = access_token
+    if not 'login' in self.request.session:
+      self.request.session['login'] = {}
+
+    self.request.session['login']['access_token'] = access_token
 
   def get_redirect_url(self, *args, **kwargs):
     self.set_access_token_in_session()
