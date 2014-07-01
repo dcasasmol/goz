@@ -30,7 +30,7 @@ TEMPLATE_DEBUG = DEBUG
 ALLOWED_HOSTS = []
 
 ADMINS = (
-    # ('David Casas Molina', 'david.casasmolina@gmail.com'),
+    ('David Casas Molina', 'david.casasmolina@gmail.com'),
 )
 
 MANAGERS = ADMINS
