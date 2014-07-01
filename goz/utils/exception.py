@@ -8,20 +8,27 @@ class GeneralException(Exception):
     self.msg = msg
 
   def __str__(self):
-    return '[ERROR] %s' % self.msg
+    return self.msg
 
-  def get_name(self):
+  @property
+  def name(self):
     '''
       Gets the exception name
     '''
     return self.__class__.__name__
 
+  @property
   def traceback(self):
     '''
-      Prints the traceback of the last exception
+      Gets the traceback of the last exception
     '''
     try:
-      print(traceback.format_exc())
+      lines = []
+
+      lines.append('%s exception catched.' % self.name)
+      lines.append(traceback.format_exc())
     except Exception as e:
-      print('[ERROR] %s can not be handled.' % self.get_name())
-      print('[DEBUG] %s' % str(e))
+      lines.append('%s exception can not be handled.' % self.name)
+      lines.append(str(e))
+
+    return '\n'.join(lines)
