@@ -1,5 +1,7 @@
 # goz/views.py
 
+import logging
+
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, logout
@@ -7,8 +9,11 @@ from django.contrib.auth import login as django_login
 from django.views.generic import RedirectView, TemplateView
 
 from dbapi.models import User
+from goz.settings import LOGGER_NAME
 from foursquareapi.models import FsApi
 from utils.mixins import LoginRequiredMixin
+
+logger = logging.getLogger(LOGGER_NAME)
 
 
 class Index(TemplateView):
@@ -37,6 +42,7 @@ class Login(RedirectView):
 
   def get(self, request, *args, **kwargs):
     access_token = self.request.session.get('login',{}).get('access_token','')
+
     if access_token:
       # Gets user info from fousquare api.
       api = FsApi(access_token)
@@ -48,6 +54,12 @@ class Login(RedirectView):
       # Logins in django User model.
       django_logged = self.__login_in_django(request, user)
 
+      if user and django_logged:
+        logger.info('Login info. User logged: %s' % user)
+      else:
+        #TODO Control if some login fails. Send error message in template.
+        logger.info('Login info. Login fails.')
+
       # Saves user info in session.
       if not 'login' in self.request.session:
         self.request.session['login'] = {}
@@ -57,7 +69,7 @@ class Login(RedirectView):
         'full_name': user.full_name,
       }
     else:
-      print('[ERROR] Access token not found in session')
+      logger.error('Login error. Access token not found in session.')
 
     return super(Login, self).get(request, *args, **kwargs)
 
@@ -68,15 +80,10 @@ class Login(RedirectView):
       defaults = user_info.get('response', {})
       user, created = User.objects.get_or_create(username=username,
                                                   defaults=defaults)
-
       if created:
-        print('[INFO] New user created: %s' % user)
-      else:
-        print('[INFO] User logged: %s' % user)
+        logger.info('Login info. New user created: %s' % user)
     else:
-      # TODO Return a 'foursquare user not found' error message.
-      print('[ERROR] Foursquare user not found')
-      pass
+      logger.error('Login error. Foursquare username not found.')
 
     return user
 
@@ -85,18 +92,16 @@ class Login(RedirectView):
 
     djangoUser = authenticate(username=user.username,
                               password=user.password)
-
     if djangoUser:
       if djangoUser.is_active:
         django_login(request, djangoUser)
         success = True
-        # Redirect to a success page.
       else:
-        # TODO Return a 'disabled account' error message.
-        print('[ERROR] Disabled account')
+        logger.warning('Login info. User disabled/inactive: %s' % user)
     else:
-      # TODO Return an 'invalid login' error message.
-      print('[ERROR] Invalid login')
+      logger.info('Login info. Invalid login for user: %s' % user)
+
+    return success
 
 
 class Logout(RedirectView):
@@ -115,7 +120,6 @@ class Logout(RedirectView):
       del self.request.session['login']
 
     logout(request)
-    print('[INFO] User logged out: [%s] %s' % (username, full_name))
+    logger.info('Logout info. User logged out: [%s] %s' % (username, full_name))
 
-    # Redirect the user to show we're done.
     return super(Logout, self).get(request, *args, **kwargs)

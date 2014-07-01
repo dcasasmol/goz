@@ -2,9 +2,14 @@
 
 import json
 import urllib
+import logging
 import datetime
 
 from .exceptions import EndpointError
+from goz.settings import LOGGER_NAME
+
+logger = logging.getLogger(LOGGER_NAME)
+
 
 class FsApi:
 
@@ -33,9 +38,8 @@ class FsApi:
       json_response = json.loads(response.decode(), encoding='utf8')
 
       return json_response
-
     except Exception as e:
-      print(e.with_traceback(e.__traceback__))
+      raise e
 
   def get_user_info(self):
     response = self.request('users/self')
