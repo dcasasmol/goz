@@ -8,8 +8,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.6/ref/settings/
 """
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import datetime
+
+
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -117,3 +120,50 @@ TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 LOCALE_PATHS = (
   os.path.join(BASE_DIR, 'locale'),
 )
+
+LOGGER_NAME = 'goz'
+LOG_MAXBYTES = 1024*1024*10 #10 MB
+LOG_BACKUPCOUNT = 5
+LOG_PATH = os.path.join(BASE_DIR, 'logs')
+LOG_FILENAME = '%s-%s' % (datetime.date.today().strftime("%Y%m%d"),
+                              __package__)
+
+LOGGING = {
+  'version': 1,
+  'disable_existing_loggers': False,
+  'formatters': {
+    'verbose': {
+      'format' : "[%(asctime)s] %(pathname)s:%(lineno)d [%(levelname)s] %(message)s",
+      'datefmt' : "%d-%b-%Y %H:%M:%S"
+    },
+    'simple': {
+      'format': '%(levelname)s %(message)s'
+    },
+  },
+  'handlers': {
+    'general': {
+      'level': 'INFO',
+      'formatter': 'verbose',
+      'class' : 'logging.handlers.RotatingFileHandler',
+      'filename' : '%s/%s.log' % (LOG_PATH, LOG_FILENAME),
+      'encoding': 'utf8',
+      'maxBytes': LOG_MAXBYTES,
+      'backupCount': LOG_BACKUPCOUNT,
+    },
+    'errors': {
+      'level': 'ERROR',
+      'formatter': 'verbose',
+      'class' : 'logging.handlers.RotatingFileHandler',
+      'filename' : '%s/%s-errors.log' % (LOG_PATH, LOG_FILENAME),
+      'encoding': 'utf8',
+      'maxBytes': LOG_MAXBYTES,
+      'backupCount': LOG_BACKUPCOUNT,
+    },
+  },
+  'loggers': {
+    LOGGER_NAME: {
+      'handlers': ['general', 'errors'],
+      'level': 'DEBUG',
+    },
+  }
+}

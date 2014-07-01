@@ -1,0 +1,58 @@
+[01-Jul-2014 00:15:07] goz.views:78 [INFO] Login info. User logged: [22956653] Game Of Zones
+[01-Jul-2014 00:15:54] goz.views:78 [INFO] Login info. User logged: [22956653] Game Of Zones
+[01-Jul-2014 00:37:04] goz.views:55 [INFO] Login info. User logged: [22956653] Game Of Zones
+[01-Jul-2014 00:37:49] goz.views:55 [INFO] Login info. User logged: [22956653] Game Of Zones
+[01-Jul-2014 00:39:28] goz.views:55 [INFO] Login info. User logged: [22956653] Game Of Zones
+[01-Jul-2014 00:40:26] goz.views:55 [INFO] Login info. User logged: [22956653] Game Of Zones
+[01-Jul-2014 00:40:29] goz.views:120 [INFO] Logout info. User logged out: [22956653] Game Of Zones
+[01-Jul-2014 00:41:48] goz.views:55 [INFO] Login info. User logged: [22956653] Game Of Zones
+[01-Jul-2014 00:41:51] goz.views:120 [WARNING] Logout info. User logged out: [22956653] Game Of Zones
+[01-Jul-2014 00:42:16] goz.views:55 [INFO] Login info. User logged: [22956653] Game Of Zones
+[01-Jul-2014 00:42:19] goz.views:120 [ERROR] Logout info. User logged out: [22956653] Game Of Zones
+[01-Jul-2014 23:07:52] goz.views:59 [INFO] Login info. User logged: [22956653] Game Of Zones
+[01-Jul-2014 23:07:58] goz.views:124 [INFO] Logout info. User logged out: [22956653] Game Of Zones
+[01-Jul-2014 23:08:53] goz.views:59 [INFO] Login info. User logged: [22956653] Game Of Zones
+[01-Jul-2014 23:09:33] goz.views:126 [INFO] Logout info. User logged out: [22956653] Game Of Zones
+[01-Jul-2014 23:09:36] goz.views:61 [INFO] Login info. User logged: [22956653] Game Of Zones
+[01-Jul-2014 23:10:36] goz.views:124 [INFO] Logout info. User logged out: [22956653] Game Of Zones
+[01-Jul-2014 23:10:39] goz.views:59 [INFO] Login info. User logged: [22956653] Game Of Zones
+[01-Jul-2014 23:11:36] goz.views:124 [INFO] Logout info. User logged out: [22956653] Game Of Zones
+[01-Jul-2014 23:11:40] goz.views:59 [INFO] Login info. User logged: [22956653] Game Of Zones
+[01-Jul-2014 23:14:59] goz.views:124 [INFO] Logout info. User logged out: [22956653] Game Of Zones
+[01-Jul-2014 23:15:03] goz.views:59 [INFO] Login info. User logged: [22956653] Game Of Zones
+[01-Jul-2014 23:23:28] goz:125 [INFO] Logout info. User logged out: [22956653] Game Of Zones
+[01-Jul-2014 23:23:34] goz:42 [ERROR] hi
+[01-Jul-2014 23:23:34] goz:45 [ERROR] [ERROR] Empty endpoint
+[01-Jul-2014 23:23:34] goz:60 [INFO] Login info. User logged: [22956653] Game Of Zones
+[01-Jul-2014 23:27:38] views.py:126 [INFO] Logout info. User logged out: [22956653] Game Of Zones
+[01-Jul-2014 23:27:41] models.py:43 [ERROR] hi
+[01-Jul-2014 23:27:41] models.py:46 [ERROR] [ERROR] Empty endpoint
+[01-Jul-2014 23:27:41] views.py:61 [INFO] Login info. User logged: [22956653] Game Of Zones
+[01-Jul-2014 23:29:50] views/views.py:126 [INFO] Logout info. User logged out: [22956653] Game Of Zones
+[01-Jul-2014 23:29:52] models/models.py:43 [ERROR] hi
+[01-Jul-2014 23:29:52] models/models.py:46 [ERROR] [ERROR] Empty endpoint
+[01-Jul-2014 23:29:52] views/views.py:61 [INFO] Login info. User logged: [22956653] Game Of Zones
+[01-Jul-2014 23:30:58] /home/axte/Proyectos/goz/goz/goz/views.py:126 [INFO] Logout info. User logged out: [22956653] Game Of Zones
+[01-Jul-2014 23:31:01] /home/axte/Proyectos/goz/goz/foursquareapi/models.py:43 [ERROR] hi
+[01-Jul-2014 23:31:01] /home/axte/Proyectos/goz/goz/foursquareapi/models.py:46 [ERROR] [ERROR] Empty endpoint
+[01-Jul-2014 23:31:01] /home/axte/Proyectos/goz/goz/goz/views.py:61 [INFO] Login info. User logged: [22956653] Game Of Zones
+[01-Jul-2014 23:34:54] get:126 [INFO] Logout info. User logged out: [22956653] Game Of Zones
+[01-Jul-2014 23:34:57] request:43 [ERROR] hi
+[01-Jul-2014 23:34:57] request:46 [ERROR] [ERROR] Empty endpoint
+[01-Jul-2014 23:34:57] get:61 [INFO] Login info. User logged: [22956653] Game Of Zones
+[01-Jul-2014 23:38:32] get:126 [INFO] Logout info. User logged out: [22956653] Game Of Zones
+[01-Jul-2014 23:43:47] /home/axte/Proyectos/goz/goz/foursquareapi/models.py:45 [ERROR] Empty endpoint
+[01-Jul-2014 23:43:47] /home/axte/Proyectos/goz/goz/goz/views.py:61 [INFO] Login info. User logged: [22956653] Game Of Zones
+[01-Jul-2014 23:45:27] /home/axte/Proyectos/goz/goz/goz/views.py:126 [INFO] Logout info. User logged out: [22956653] Game Of Zones
+[01-Jul-2014 23:57:43] /home/axte/Proyectos/goz/goz/foursquareapi/models.py:44 [ERROR] Empty endpoint
+[01-Jul-2014 23:57:43] /home/axte/Proyectos/goz/goz/goz/views.py:61 [INFO] Login info. User logged: [22956653] Game Of Zones
+[01-Jul-2014 23:57:58] /home/axte/Proyectos/goz/goz/goz/views.py:126 [INFO] Logout info. User logged out: [22956653] Game Of Zones
+[01-Jul-2014 23:58:57] /home/axte/Proyectos/goz/goz/foursquareapi/models.py:43 [ERROR] EndpointError exception catched.
+Traceback (most recent call last):
+  File "/home/axte/Proyectos/goz/goz/foursquareapi/models.py", line 34, in request
+    url = self.__build_url(endpoint, params)
+  File "/home/axte/Proyectos/goz/goz/foursquareapi/models.py", line 23, in __build_url
+    raise EndpointError
+foursquareapi.exceptions.EndpointError: Empty endpoint
+
+[01-Jul-2014 23:58:57] /home/axte/Proyectos/goz/goz/goz/views.py:61 [INFO] Login info. User logged: [22956653] Game Of Zones

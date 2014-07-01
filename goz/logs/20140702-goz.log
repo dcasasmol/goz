@@ -1,0 +1,14 @@
+[02-Jul-2014 00:04:30] /home/axte/Proyectos/goz/goz/goz/views.py:126 [INFO] Logout info. User logged out: [22956653] Game Of Zones
+[02-Jul-2014 00:05:18] /home/axte/Proyectos/goz/goz/goz/views.py:54 [ERROR] EndpointError exception catched.
+Traceback (most recent call last):
+  File "/home/axte/Proyectos/goz/goz/goz/views.py", line 52, in get
+    api.request()
+  File "/home/axte/Proyectos/goz/goz/foursquareapi/models.py", line 43, in request
+    raise e
+  File "/home/axte/Proyectos/goz/goz/foursquareapi/models.py", line 34, in request
+    url = self.__build_url(endpoint, params)
+  File "/home/axte/Proyectos/goz/goz/foursquareapi/models.py", line 23, in __build_url
+    raise EndpointError
+foursquareapi.exceptions.EndpointError: Empty endpoint
+
+[02-Jul-2014 00:05:18] /home/axte/Proyectos/goz/goz/goz/views.py:64 [INFO] Login info. User logged: [22956653] Game Of Zones

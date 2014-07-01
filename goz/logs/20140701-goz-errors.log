@@ -1,0 +1,21 @@
+[01-Jul-2014 00:42:19] goz.views:120 [ERROR] Logout info. User logged out: [22956653] Game Of Zones
+[01-Jul-2014 23:23:34] goz:42 [ERROR] hi
+[01-Jul-2014 23:23:34] goz:45 [ERROR] [ERROR] Empty endpoint
+[01-Jul-2014 23:27:41] models.py:43 [ERROR] hi
+[01-Jul-2014 23:27:41] models.py:46 [ERROR] [ERROR] Empty endpoint
+[01-Jul-2014 23:29:52] models/models.py:43 [ERROR] hi
+[01-Jul-2014 23:29:52] models/models.py:46 [ERROR] [ERROR] Empty endpoint
+[01-Jul-2014 23:31:01] /home/axte/Proyectos/goz/goz/foursquareapi/models.py:43 [ERROR] hi
+[01-Jul-2014 23:31:01] /home/axte/Proyectos/goz/goz/foursquareapi/models.py:46 [ERROR] [ERROR] Empty endpoint
+[01-Jul-2014 23:34:57] request:43 [ERROR] hi
+[01-Jul-2014 23:34:57] request:46 [ERROR] [ERROR] Empty endpoint
+[01-Jul-2014 23:43:47] /home/axte/Proyectos/goz/goz/foursquareapi/models.py:45 [ERROR] Empty endpoint
+[01-Jul-2014 23:57:43] /home/axte/Proyectos/goz/goz/foursquareapi/models.py:44 [ERROR] Empty endpoint
+[01-Jul-2014 23:58:57] /home/axte/Proyectos/goz/goz/foursquareapi/models.py:43 [ERROR] EndpointError exception catched.
+Traceback (most recent call last):
+  File "/home/axte/Proyectos/goz/goz/foursquareapi/models.py", line 34, in request
+    url = self.__build_url(endpoint, params)
+  File "/home/axte/Proyectos/goz/goz/foursquareapi/models.py", line 23, in __build_url
+    raise EndpointError
+foursquareapi.exceptions.EndpointError: Empty endpoint
+
