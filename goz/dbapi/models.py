@@ -12,7 +12,7 @@ from utils.views import generate_password, is_valid_password
 
 
 class User(models.Model):
-  '''This class models the *game of zones* user model.
+  '''This class models the *Game of Zones* user model.
 
   Note:
     This class uses a Django User object to authenticate itself in Django
@@ -36,8 +36,8 @@ class User(models.Model):
     city (str, optional): User city.
     bio (str, optional): User biography.
     email (str, optional): User email.
-    facebook (srt, optional): User `Facebook` slug.
-    twitter (srt, optional): User `Twitter` slug.
+    facebook (str, optional): User `Facebook` slug.
+    twitter (str, optional): User `Twitter` slug.
     friends (list of User, optional): User friends (another User objects).
     creation_date (datetime): User creation datetime.
     last_update (datetime): User last update datetime.
@@ -275,7 +275,7 @@ class User(models.Model):
     '''Processes a raw gender to store it in databse.
 
     Args:
-      raw_gender (srt): Raw gender.
+      raw_gender (str): Raw gender.
 
     Returns:
       str: Processed gender.
