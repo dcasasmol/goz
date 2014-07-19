@@ -795,6 +795,23 @@ class Item(models.Model):
 
 
 class Badge(models.Model):
+  '''This class models a *Game of Zones* badge.
+
+  A badge is a reward that an user earns after completing different objectives.
+
+  Attributes:
+    id (int): Badge id.
+    name (str): Badge name.
+    description (str): Badge description.
+    unlock_message (str): Badge unlock message.
+    level (int): Badge level, default 0.
+    icon (str): Badge icon slug.
+    purchasers (list of Unlocking): Unlockings of the Badge for many users.
+    creation_date (datetime): Badge creation datetime.
+    last_update (datetime): Badge last update datetime.
+    active (bool): If the Badge is active or not, default True.
+
+  '''
   id = models.AutoField(primary_key=True)
   name = models.CharField(max_length=255)
   description = models.CharField(max_length=255)
@@ -807,18 +824,68 @@ class Badge(models.Model):
   active = models.BooleanField(default=True)
 
   class Meta:
+    '''Badge model metadata
+
+    Attributes:
+      ordering (list of str): Fields to order by in queries.
+
+    '''
     ordering = ['level']
 
-  def __str__(self):
-    return self.name
+  def enable(self):
+    '''Sets the `active` attribute of the Badge to True.
+
+    '''
+    if not self.is_active:
+      self.active = True
+      self.save()
+
+  def disable(self):
+    '''Sets the `active` attribute of the Badge to False.
+
+    '''
+    if self.is_active:
+      self.active = False
+      self.save()
 
   @property
   def is_active(self):
+    '''Checks if the Badge is active.
+
+    Returns:
+      bool: True if active, False otherwise.
+
+    '''
     return self.active
 
   @property
   def num_unlockings(self):
+    '''Gets the unlockings number of the Badge.
+
+    Returns:
+      int: Unlockings number.
+
+    '''
     return self.unlockings.filter(badge=self).count()
+
+  def __str__(self):
+    '''Displays a human-readable representation of the Badge object.
+
+    Returns:
+      str: Human-readable representation of the Badge object.
+
+    '''
+    return self.name
+
+  @property
+  def related_unlockings(self):
+    '''Gets unlockings related to the Badge.
+
+    Returns:
+      QuerySet: Unlocking objects related to the Badge.
+
+    '''
+    return self.unlocking_set.all()
 
 
 class Score(models.Model):
