@@ -792,7 +792,7 @@ class Badge(models.Model):
 class Score(models.Model):
   '''This class is an intermediate model between User and Zone.
 
-  Store the points earned by an User in a Zone.
+  Store the points earned by an user in a zone.
 
   Attributes:
     id (int): Score id.
@@ -844,6 +844,20 @@ class Score(models.Model):
 
 
 class Checkin(models.Model):
+  '''This class is an intermediate model between User and Venue.
+
+  Store the numbers of checkins made by an user in a zone.
+
+  Attributes:
+    id (int): Checkin id.
+    user (User): User who made checkins.
+    venue (Venue): Venue where the checkin is made.
+    number (int): Checkins number made, default 0.
+    process (bool): If the Checkin has been processed or not, default True.
+    creation_date (datetime): Checkin creation datetime.
+    last_update (datetime): Checkin last update datetime.
+
+  '''
   id = models.AutoField(primary_key=True)
   user = models.ForeignKey(User,
                           related_name='checkins',
@@ -855,15 +869,34 @@ class Checkin(models.Model):
   last_update = models.DateTimeField(auto_now=True)
 
   class Meta:
+    '''Checkin model metadata.
+
+    Attributes:
+      unique_together (tuple): Tuple of fields which must be unique.
+      ordering (list of str): Fields to order by in queries.
+
+    '''
     unique_together = ('user', 'venue')
     ordering = ['user', '-number']
 
-  def __str__(self):
-    return '%s:%s [%s]' % (self.user, self.venue, self.number)
-
   @property
   def is_processed(self):
+    '''Checks if the Checkin has been processed or not.
+
+    Returns:
+      bool: True if has been processed, False otherwise.
+
+    '''
     return self.process
+
+  def __str__(self):
+    '''Displays a human-readable representation of the Checkin object.
+
+    Returns:
+      str: Human-readable representation of the Checkin object.
+
+    '''
+    return '%s:%s [%s]' % (self.user, self.venue, self.number)
 
 
 class Purchase(models.Model):
