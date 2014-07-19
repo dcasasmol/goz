@@ -382,7 +382,7 @@ class Categorie(models.Model):
     icon (str): Categorie icon slug.
     creation_date (datetime): Categorie creation datetime.
     last_update (datetime): Categorie last update datetime.
-    active (bool): If the categorie is active or not, default True.
+    active (bool): If the Categorie is active or not, default True.
 
   '''
   id = models.AutoField(primary_key=True)
@@ -477,7 +477,7 @@ class Zone(models.Model):
     scores (list of Score): Scores in the Zone for many users.
     creation_date (datetime): Zone creation datetime.
     last_update (datetime): Zone last update datetime.
-    active (bool): If the categorie is active or not, default True.
+    active (bool): If the Zone is active or not, default True.
 
   '''
   id = models.AutoField(primary_key=True)
