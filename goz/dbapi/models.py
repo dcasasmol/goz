@@ -437,26 +437,6 @@ class Categorie(models.Model):
     '''
     return self.name
 
-  @property
-  def related_events(self):
-    '''Gets events related to the Categorie.
-
-    Returns:
-      QuerySet: Event objects related to the Categorie.
-
-    '''
-    return self.events.all()
-
-  @property
-  def related_venues(self):
-    '''Gets venues related to the Categorie.
-
-    Returns:
-      QuerySet: Venue objects related to the Categorie.
-
-    '''
-    return self.venues.all()
-
 
 class Zone(models.Model):
   '''This class models a *Game of Zones* zone.
@@ -560,36 +540,6 @@ class Zone(models.Model):
     '''
     return self.scores.filter(zone=self).aggregate(sum=Sum('points'))['sum']
 
-  @property
-  def related_events(self):
-    '''Gets events related to the Zone.
-
-    Returns:
-      QuerySet: Event objects related to the Zone.
-
-    '''
-    return self.events.all()
-
-  @property
-  def related_scores(self):
-    '''Gets scores related to the Zone.
-
-    Returns:
-      QuerySet: Score objects related to the Zone.
-
-    '''
-    return self.score_set.all()
-
-  @property
-  def related_venues(self):
-    '''Gets venues related to the Zone.
-
-    Returns:
-      QuerySet: Venue objects related to the Zone.
-
-    '''
-    return self.venues.all()
-
 
 class Venue(models.Model):
   '''This class models a *Foursquare* venue.
@@ -669,25 +619,6 @@ class Venue(models.Model):
     '''
     return self.name
 
-  @property
-  def related_checkins(self):
-    '''Gets checkins related to the Venue.
-
-    Returns:
-      QuerySet: Checkin objects related to the Venue.
-
-    '''
-    return self.checkin_set.all()
-
-  @property
-  def related_events(self):
-    '''Gets events related to the Venue.
-
-    Returns:
-      QuerySet: Event objects related to the Venue.
-
-    '''
-    return self.events.all()
 
 
 class Item(models.Model):
@@ -773,26 +704,6 @@ class Item(models.Model):
     '''
     return self.name
 
-  @property
-  def related_events(self):
-    '''Gets events related to the Item.
-
-    Returns:
-      QuerySet: Event objects related to the Item.
-
-    '''
-    return self.events.all()
-
-  @property
-  def related_purchases(self):
-    '''Gets purchases related to the Item.
-
-    Returns:
-      QuerySet: Purchase objects related to the Item.
-
-    '''
-    return self.purchase_set.all()
-
 
 class Badge(models.Model):
   '''This class models a *Game of Zones* badge.
@@ -876,16 +787,6 @@ class Badge(models.Model):
 
     '''
     return self.name
-
-  @property
-  def related_unlockings(self):
-    '''Gets unlockings related to the Badge.
-
-    Returns:
-      QuerySet: Unlocking objects related to the Badge.
-
-    '''
-    return self.unlocking_set.all()
 
 
 class Score(models.Model):
