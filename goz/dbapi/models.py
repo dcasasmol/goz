@@ -759,7 +759,7 @@ class Item(models.Model):
     '''Gets the purchases number of the Item.
 
     Returns:
-      int: Purchase number.
+      int: Purchases number.
 
     '''
     return self.purchasers.filter(item=self).count()
@@ -785,7 +785,7 @@ class Item(models.Model):
 
   @property
   def related_purchases(self):
-    '''Gets purchases related to the Venue.
+    '''Gets purchases related to the Item.
 
     Returns:
       QuerySet: Purchase objects related to the Item.
