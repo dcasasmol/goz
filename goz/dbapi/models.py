@@ -393,7 +393,7 @@ class Categorie(models.Model):
   active = models.BooleanField(default=True)
 
   def enable(self):
-    '''Sets the `active` attribute of the categorie to True.
+    '''Sets the `active` attribute of the Categorie to True.
 
     '''
     if not self.is_active:
@@ -401,7 +401,7 @@ class Categorie(models.Model):
       self.save()
 
   def disable(self):
-    '''Sets the `active` attribute of the categorie to False.
+    '''Sets the `active` attribute of the Categorie to False.
 
     '''
     if self.is_active:
@@ -410,7 +410,7 @@ class Categorie(models.Model):
 
   @property
   def is_active(self):
-    '''Checks if the categorie is active.
+    '''Checks if the Categorie is active.
 
     Returns:
       bool: True if active, False otherwise.
@@ -420,7 +420,7 @@ class Categorie(models.Model):
 
   @property
   def num_venues(self):
-    '''Gets the venues number of the categorie.
+    '''Gets the venues number of the Categorie.
 
     Returns:
       int: Venues number.
