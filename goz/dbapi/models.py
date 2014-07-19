@@ -889,6 +889,19 @@ class Badge(models.Model):
 
 
 class Score(models.Model):
+  '''This class is an intermediate model between User and Zone.
+
+  Store the points earned by an User in a Zone.
+
+  Attributes:
+    id (int): Score id.
+    user (User): User who earns points.
+    zone (Zone): Zone where the User earns points.
+    points (int): Score earned, default 0.
+    creation_date (datetime): Score creation datetime.
+    last_update (datetime): Score last update datetime.
+
+  '''
   id = models.AutoField(primary_key=True)
   user = models.ForeignKey(User,
                           related_name='scores',
@@ -899,15 +912,34 @@ class Score(models.Model):
   last_update = models.DateTimeField(auto_now=True)
 
   class Meta:
+    '''Score model metadata.
+
+    Attributes:
+      unique_together (tuple): Tuple of fields which must be unique.
+      ordering (list of str): Fields to order by in queries.
+
+    '''
     unique_together = ('user', 'zone')
     ordering = ['user', '-points']
 
-  def __str__(self):
-    return '%s:%s [%s]' % (self.user, self.zone, self.points)
-
   @property
   def is_king(self):
-    return self.zone in self.user.kingdoms
+    '''Check if the related user is the king of the related zone.
+
+    Returns:
+      bool: True if is the king, False otherwise.
+
+    '''
+    return self.user is self.zone.king
+
+  def __str__(self):
+    '''Displays a human-readable representation of the Score object.
+
+    Returns:
+      str: Human-readable representation of the Score object.
+
+    '''
+    return '%s:%s [%s]' % (self.user, self.zone, self.points)
 
 
 class Checkin(models.Model):
