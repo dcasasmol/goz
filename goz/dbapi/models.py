@@ -437,8 +437,49 @@ class Categorie(models.Model):
     '''
     return self.name
 
+  @property
+  def related_events(self):
+    '''Gets events related to the Categorie.
+
+    Returns:
+      QuerySet: Event objects related to the Categorie.
+
+    '''
+    return self.events.all()
+
+  @property
+  def related_venues(self):
+    '''Gets venues related to the Categorie.
+
+    Returns:
+      QuerySet: Venue objects related to the Categorie.
+
+    '''
+    return self.venues.all()
+
 
 class Zone(models.Model):
+  '''This class models a *Game of Zones* zone.
+
+  A zone is a part of a town/city where you can make checkins to get points.
+  The user with the highest score in a zone is called king.
+
+  Attributes:
+    id (int): Zone id.
+    name (str): Zone name.
+    king (User): Zone king.
+    stroke_colour (str): Zone border colour, default '#008800'.
+    stroke_weight (str): Zone border weight, default '4',
+    stroke_opacity (str): Zone border opacity, default '1',
+    fill_colour (str): Zone fill colour, default '#008800',
+    fill_opacity (str): Zone fill opacity, default '0.2',
+    points (str): A list of points which mark off the zone.
+    scores (list of Score): Scores in the Zone for many users.
+    creation_date (datetime): Zone creation datetime.
+    last_update (datetime): Zone last update datetime.
+    active (bool): If the categorie is active or not, default True.
+
+  '''
   id = models.AutoField(primary_key=True)
   name = models.CharField(max_length=255)
   king = models.ForeignKey(User,
@@ -456,22 +497,98 @@ class Zone(models.Model):
   active = models.BooleanField(default=True)
 
   class Meta:
+    '''Zone model metadata
+
+    Attributes:
+      ordering (list of str): Fields to order by in queries.
+
+    '''
     ordering = ['id']
 
-  def __str__(self):
-    return self.name
+  def enable(self):
+    '''Sets the `active` attribute of the Zone to True.
+
+    '''
+    if not self.is_active:
+      self.active = True
+      self.save()
+
+  def disable(self):
+    '''Sets the `active` attribute of the Zone to False.
+
+    '''
+    if self.is_active:
+      self.active = False
+      self.save()
 
   @property
   def is_active(self):
+    '''Checks if the Zone is active.
+
+    Returns:
+      bool: True if active, False otherwise.
+
+    '''
     return self.active
 
   @property
   def num_venues(self):
+    '''Gets the venues number of the Zone.
+
+    Returns:
+      int: Venues number.
+
+    '''
     return self.venues.count()
+
+  def __str__(self):
+    '''Displays a human-readable representation of the Zone object.
+
+    Returns:
+      str: Human-readable representation of the Zone object.
+
+    '''
+    return self.name
 
   @property
   def total_score(self):
+    '''Gets the total score of the Zone.
+
+    Returns:
+      int: Total score.
+
+    '''
     return self.scores.filter(zone=self).aggregate(sum=Sum('points'))['sum']
+
+  @property
+  def related_events(self):
+    '''Gets events related to the Zone.
+
+    Returns:
+      QuerySet: Event objects related to the Zone.
+
+    '''
+    return self.events.all()
+
+  @property
+  def related_scores(self):
+    '''Gets scores related to the Zone.
+
+    Returns:
+      QuerySet: Score objects related to the Zone.
+
+    '''
+    return self.score_set.all()
+
+  @property
+  def related_venues(self):
+    '''Gets venues related to the Zone.
+
+    Returns:
+      QuerySet: Venue objects related to the Zone.
+
+    '''
+    return self.venues.all()
 
 
 class Venue(models.Model):
