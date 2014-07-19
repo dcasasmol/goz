@@ -374,6 +374,17 @@ class User(models.Model):
 
 
 class Categorie(models.Model):
+  '''This class models a *Foursquare* categorie.
+
+  Attributes:
+    id (int): Categorie id.
+    name (str): Categorie name.
+    icon (str): Categorie icon slug.
+    creation_date (datetime): Categorie creation datetime.
+    last_update (datetime): Categorie last update datetime.
+    active (bool): If the categorie is active or not, default True.
+
+  '''
   id = models.AutoField(primary_key=True)
   name = models.CharField(max_length=255)
   icon = models.SlugField(max_length=255)
@@ -381,16 +392,50 @@ class Categorie(models.Model):
   last_update = models.DateTimeField(auto_now=True)
   active = models.BooleanField(default=True)
 
-  def __str__(self):
-    return self.name
+  def enable(self):
+    '''Sets the `active` attribute of the categorie to True.
+
+    '''
+    if not self.is_active:
+      self.active = True
+      self.save()
+
+  def disable(self):
+    '''Sets the `active` attribute of the categorie to False.
+
+    '''
+    if self.is_active:
+      self.active = False
+      self.save()
 
   @property
   def is_active(self):
+    '''Checks if the categorie is active.
+
+    Returns:
+      bool: True if active, False otherwise.
+
+    '''
     return self.active
 
   @property
   def num_venues(self):
+    '''Gets the venues number of the categorie.
+
+    Returns:
+      int: Venues number.
+
+    '''
     return self.venues.count()
+
+  def __str__(self):
+    '''Displays a human-readable representation of the Categorie object.
+
+    Returns:
+      str: Human-readable representation of the Categorie object.
+
+    '''
+    return self.name
 
 
 class Zone(models.Model):
