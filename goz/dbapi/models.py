@@ -497,7 +497,7 @@ class Zone(models.Model):
   active = models.BooleanField(default=True)
 
   class Meta:
-    '''Zone model metadata
+    '''Zone model metadata.
 
     Attributes:
       ordering (list of str): Fields to order by in queries.
@@ -824,7 +824,7 @@ class Badge(models.Model):
   active = models.BooleanField(default=True)
 
   class Meta:
-    '''Badge model metadata
+    '''Badge model metadata.
 
     Attributes:
       ordering (list of str): Fields to order by in queries.
