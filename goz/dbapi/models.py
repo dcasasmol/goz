@@ -7,9 +7,8 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User as djangoUser
 
-from utils.views import generate_password, is_valid_password
-
 from .exceptions import UserNotSaved
+from utils.views import generate_password, is_valid_password
 
 
 class User(models.Model):
@@ -26,13 +25,13 @@ class User(models.Model):
     GENDER_CHOICES (tuple): Database gender choices.
     id (int): User id.
     user (djangoUser): Django User object.
-    username (str): Django User username (`Foursquare` user id).
+    username (str): Django User username (*Foursquare* user id).
     password (str): Django User password.
     first_name (str): User first name.
     last_name (str): User last name.
     gender (str): User gender, select one of `GENDER_CHOICES`,
-      defaults to `NOT_AVAILABLE`.
-    birth_date (date, optional): User birth date.
+      default to `NOT_AVAILABLE`.
+    birth_date (date, optional): User birth date, default None.
     photo (str): User photo slug.
     city (str, optional): User city.
     bio (str, optional): User biography.
@@ -40,8 +39,8 @@ class User(models.Model):
     facebook (srt, optional): User `Facebook` slug.
     twitter (srt, optional): User `Twitter` slug.
     friends (list of User, optional): User friends (another User objects).
-    creation_date (datetime): User creation date.
-    last_update (datetime): User last update date.
+    creation_date (datetime): User creation datetime.
+    last_update (datetime): User last update datetime.
 
   '''
   MALE = 'ma'
@@ -131,7 +130,7 @@ class User(models.Model):
     if self.user_id and not self.is_active:
       self.user.is_active = True
       self.user.save()
-    elif not self.user:
+    elif not self.user_id:
       raise UserNotSaved
 
   def disable(self):
@@ -151,7 +150,7 @@ class User(models.Model):
     if self.user_id and self.is_active:
       self.user.is_active = False
       self.user.save()
-    elif not self.user:
+    elif not self.user_id:
       raise UserNotSaved
 
   @property
@@ -175,7 +174,7 @@ class User(models.Model):
       bool: True if successful, False otherwise.
 
     '''
-    return self.user.is_active if self.user else False
+    return self.user.is_active if self.user_id else False
 
   @property
   def is_female(self):
@@ -353,10 +352,10 @@ class User(models.Model):
     super(User, self).save(*args, **kwargs)
 
   def __str__(self):
-    '''Displays a human-readable representation of the object.
+    '''Displays a human-readable representation of the User object.
 
     Returns:
-      str: Human-readable representation of the object.
+      str: Human-readable representation of the User object.
 
     '''
     return '[%s] %s %s' % (self.username,
