@@ -3,13 +3,47 @@
 import datetime
 
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User as djangoUser
 
-from utils.views import generate_password
+from utils.views import generate_password, is_valid_password
+
+from .exceptions import UserNotSaved
 
 
 class User(models.Model):
+  '''This class models the *game of zones* user model.
+
+  Note:
+    This class uses a Django User object to authenticate itself in Django
+    authentication system.
+
+  Attributes:
+    MALE (str): Male database token.
+    FEMALE (str): Female database token.
+    NOT_AVAILABLE: (str): Gender gender not available database token.
+    GENDER_CHOICES (tuple): Database gender choices.
+    id (int): User id.
+    user (djangoUser): Django User object.
+    username (str): Django User username (`Foursquare` user id).
+    password (str): Django User password.
+    first_name (str): User first name.
+    last_name (str): User last name.
+    gender (str): User gender, select one of `GENDER_CHOICES`,
+      defaults to `NOT_AVAILABLE`.
+    birth_date (date, optional): User birth date.
+    photo (str): User photo slug.
+    city (str, optional): User city.
+    bio (str, optional): User biography.
+    email (str, optional): User email.
+    facebook (srt, optional): User `Facebook` slug.
+    twitter (srt, optional): User `Twitter` slug.
+    friends (list of User, optional): User friends (another User objects).
+    creation_date (datetime): User creation date.
+    last_update (datetime): User last update date.
+
+  '''
   MALE = 'ma'
   FEMALE = 'fe'
   NOT_AVAILABLE = 'na'
@@ -39,30 +73,215 @@ class User(models.Model):
   creation_date = models.DateTimeField(auto_now_add=True)
   last_update = models.DateTimeField(auto_now=True)
 
-  # Override save to create/update django user model.
-  def save(self, *args, **kwargs):
-    if not self.user_id:
-      self.password = generate_password(size=8)
-      hashed_password = make_password(self.password)
+  def change_password(self, new_pw):
+    '''Changes the current password by a given new one.
 
-      self.user = djangoUser.objects.create(username=self.username,
-                                            password=hashed_password)
+    Only changes the password if the user is saved (`user` attribute has a
+    Django User object instance) and `new_pw` is a valid password.
 
-    self.user.first_name = self.first_name
-    self.user.last_name = self.last_name
-    self.user.email = self.email
-    self.user.save()
+    Note:
+      Uses `set_password` methods of Django User model.
 
-    self.gender = self.__process_gender(self.gender)
+    Args:
+      new_pw (str): New password.
 
-    super(User, self).save(*args, **kwargs)
+    Raises:
+      UserNotSaved: If the user is not saved (`user` attribute has a Django
+        User object instance).
+      ValidationError: If `new_pw` is not a valid password.
 
-  def __str__(self):
-    return '[%s] %s %s' % (self.username,
-                           self.first_name,
-                           self.last_name)
+    '''
+    if self.user_id:
 
-  def __process_gender(self, raw_gender):
+      if is_valid_password(new_pw):
+        old_pw = self.password
+
+        try:
+
+          self.user.set_password(new_pw)
+          self.password = new_pw
+
+          self.save()
+
+        except Exception as e:
+
+          self.user.set_password(old_pw)
+          self.user.save()
+
+      else:
+        raise ValidationError
+
+    else:
+      raise UserNotSaved
+
+  def enable(self):
+    '''Sets the `is active` attribute of Django User model to True.
+
+    Only enables the user if is saved (`user` attribute has a Django User
+    object instance).
+
+    Note:
+      Uses `is_active` attribute of Django User model.
+
+    Raises:
+      UserNotSaved: If the user is not saved (`user` attribute has a Django
+        User object instance).
+
+    '''
+    if self.user_id and not self.is_active:
+      self.user.is_active = True
+      self.user.save()
+    elif not self.user:
+      raise UserNotSaved
+
+  def disable(self):
+    '''Sets the `is active` attribute of Django User model to False.
+
+    Only disables the user if is saved (`user` attribute has a Django User
+    object instance).
+
+    Note:
+      Uses `is_active` attribute of Django User model.
+
+    Raises:
+      UserNotSaved: If the user is not saved (`user` attribute has a Django
+        User object instance).
+
+    '''
+    if self.user_id and self.is_active:
+      self.user.is_active = False
+      self.user.save()
+    elif not self.user:
+      raise UserNotSaved
+
+  @property
+  def full_name(self):
+    '''Gets the full name of the user.
+
+    Returns:
+      str: The first_name plus the last_name, separated by a space.
+
+    '''
+    return ' '.join([self.first_name, self.last_name])
+
+  @property
+  def is_active(self):
+    '''Checks if the user is active.
+
+    Note:
+      Uses `is_active` attribute of Django User model.
+
+    Returns:
+      bool: True if successful, False otherwise.
+
+    '''
+    return self.user.is_active if self.user else False
+
+  @property
+  def is_female(self):
+    '''Checks if the user is female.
+
+    Returns:
+      bool: True if successful, False otherwise.
+
+    '''
+    return self.gender == self.FEMALE
+
+  def is_friend(self, user):
+    '''Checks if a given User is friend or not.
+
+    Args:
+      user (User): User object to check.
+
+    Returns:
+      bool: True if successful, False otherwise.
+
+    '''
+    return user in self.friends
+
+  @property
+  def is_male(self):
+    '''Checks if the user is male.
+
+    Returns:
+      bool: True if successful, False otherwise.
+
+    '''
+    return self.gender == self.MALE
+
+  @property
+  def last_login(self):
+    '''Gets the datetime of the user's last login.
+
+    Note:
+      Uses `last_login` attribute of Django User model.
+
+    Returns:
+      datetime: User's last login.
+
+    '''
+    return self.user.last_login
+
+  @property
+  def num_badges(self):
+    '''Gets the badges number of the user.
+
+    Returns:
+      int: Badges number.
+
+    '''
+    return self.badges.filter(user=self).count()
+
+  @property
+  def num_checkins(self):
+    '''Gets the checkins number of the user.
+
+    Returns:
+      int: Checkins number.
+
+    '''
+    return self.checkins.filter(user=self).count()
+
+  @property
+  def num_friends(self):
+    '''Gets the friends number of the user.
+
+    Returns:
+      int: Friends number.
+
+    '''
+    return self.friends.count()
+
+  @property
+  def num_kingdoms(self):
+    '''Gets the kingdoms number of the user.
+
+    Returns:
+      int: Kingdoms number.
+
+    '''
+    return self.kingdoms.count()
+
+  @property
+  def num_purchases(self):
+    '''Gets the purchases number of the user.
+
+    Returns:
+      int: Purchases number.
+
+    '''
+    return self.purchases.filter(user=self).count()
+
+  def _process_gender(self, raw_gender):
+    '''Processes a raw gender to store it in databse.
+
+    Args:
+      raw_gender (srt): Raw gender.
+
+    Returns:
+      str: Processed gender.
+
+    '''
     if raw_gender.lower() in ['male', 'masculine', 'man']:
       gender = self.MALE
     elif raw_gender.lower() in ['female', 'feminine', 'woman']:
@@ -72,48 +291,87 @@ class User(models.Model):
 
     return gender
 
-  def is_friend(self, user):
-    return user in self.friends
+  def reset_password(self):
+    '''Resets the current password by a random one.
+
+    Only resets the password if the user is saved (`user` attribute has a
+    Django User object instance).
+
+    Note:
+      Uses `set_password` methods of Django User model.
+
+    Raises:
+      UserNotSaved: If the user is not saved (`user` attribute has a Django
+        User object instance).
+
+    '''
+    if self.user_id:
+      old_pw = self.password
+
+      try:
+
+        random_pw = generate_password(size=8)
+
+        self.user.set_password(random_pw)
+        self.password = random_pw
+
+        self.save()
+
+      except Exception as e:
+
+        self.user.set_password(old_pw)
+        self.user.save()
+
+    else:
+      raise UserNotSaved
+
+  def save(self, *args, **kwargs):
+    '''Saves the User object creating/updating the Django User model.
+
+    Args:
+      *args: Variable length argument list.
+      **kwargs: Arbitrary keyword arguments.
+
+    '''
+    if not self.user_id:
+      # If User not has Django user object, creates a new one.
+      self.password = generate_password(size=8)
+      hashed_password = make_password(self.password)
+
+      self.user = djangoUser.objects.create(username=self.username,
+                                            password=hashed_password)
+
+    # Updates Django user attributes.
+    self.user.first_name = self.first_name
+    self.user.last_name = self.last_name
+    self.user.email = self.email
+    self.user.save()
+
+    self.gender = self._process_gender(self.gender)
+
+    # Finally, saves User object.
+    super(User, self).save(*args, **kwargs)
+
+  def __str__(self):
+    '''Displays a human-readable representation of the object.
+
+    Returns:
+      str: Human-readable representation of the object.
+
+    '''
+    return '[%s] %s %s' % (self.username,
+                           self.first_name,
+                           self.last_name)
 
   @property
-  def full_name(self):
-    return self.user.get_full_name()
+  def total_score(self):
+    '''Gets the total score of the user.
 
-  @property
-  def num_friends(self):
-    return self.friends.count()
+    Returns:
+      int: Total score.
 
-  @property
-  def num_kingdoms(self):
-    return self.kingdoms.count()
-
-  @property
-  def scores(self):
+    '''
     return self.scores.filter(user=self).aggregate(sum=Sum('points'))['sum']
-
-  @property
-  def num_purchases(self):
-    return self.purchases.filter(user=self).count()
-
-  @property
-  def num_checkins(self):
-    return self.checkins.filter(user=self).count()
-
-  @property
-  def num_badges(self):
-    return self.badges.filter(user=self).count()
-
-  @property
-  def is_male(self):
-    return self.gender == self.MALE
-
-  @property
-  def is_female(self):
-    return self.gender == self.FEMALE
-
-  @property
-  def is_active(self):
-    return self.user.is_active
 
 
 class Categorie(models.Model):
