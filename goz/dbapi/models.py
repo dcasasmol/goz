@@ -691,6 +691,28 @@ class Venue(models.Model):
 
 
 class Item(models.Model):
+  '''This class models a *Game of Zones* item.
+
+  An item is an object that can be bought spending points and can be used to
+  attack other users zones or to defend yours.
+
+  Attributes:
+    id (int): Item id.
+    name (str): Item name.
+    description (str): Item description.
+    attack (int): Item attack value, default 0.
+    defense (int): Item defense value, default 0.
+    speed (int): Item speed value, default 0.
+    reach (int): Item reach value, default 0.
+    price (int): Item price, default 0.
+    duration (int): Item duration, default 0.
+    icon (str): Item icon slug.
+    purchasers (list of Purchase): Purchases of the Item for many users.
+    creation_date (datetime): Item creation datetime.
+    last_update (datetime): Item last update datetime.
+    active (bool): If the Item is active or not, default True.
+
+  '''
   id = models.AutoField(primary_key=True)
   name = models.CharField(max_length=255)
   description = models.CharField(max_length=255)
@@ -706,16 +728,70 @@ class Item(models.Model):
   last_update = models.DateTimeField(auto_now=True)
   active = models.BooleanField(default=True)
 
-  def __str__(self):
-    return self.name
+  def enable(self):
+    '''Sets the `active` attribute of the Item to True.
+
+    '''
+    if not self.is_active:
+      self.active = True
+      self.save()
+
+  def disable(self):
+    '''Sets the `active` attribute of the Item to False.
+
+    '''
+    if self.is_active:
+      self.active = False
+      self.save()
 
   @property
   def is_active(self):
+    '''Checks if the Item is active.
+
+    Returns:
+      bool: True if active, False otherwise.
+
+    '''
     return self.active
 
   @property
-  def num_purchaser(self):
+  def num_purchases(self):
+    '''Gets the purchases number of the Item.
+
+    Returns:
+      int: Purchase number.
+
+    '''
     return self.purchasers.filter(item=self).count()
+
+  def __str__(self):
+    '''Displays a human-readable representation of the Item object.
+
+    Returns:
+      str: Human-readable representation of the Item object.
+
+    '''
+    return self.name
+
+  @property
+  def related_events(self):
+    '''Gets events related to the Item.
+
+    Returns:
+      QuerySet: Event objects related to the Item.
+
+    '''
+    return self.events.all()
+
+  @property
+  def related_purchases(self):
+    '''Gets purchases related to the Venue.
+
+    Returns:
+      QuerySet: Purchase objects related to the Item.
+
+    '''
+    return self.purchase_set.all()
 
 
 class Badge(models.Model):
