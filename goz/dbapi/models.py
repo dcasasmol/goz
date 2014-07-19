@@ -592,6 +592,22 @@ class Zone(models.Model):
 
 
 class Venue(models.Model):
+  '''This class models a *Foursquare* venue.
+
+  Attributes:
+    id (int): Venue id.
+    name (str): Venue name.
+    lat (str): Venue latitude.
+    lng (str): Venue longitude.
+    foursquare_url (str): Venue *Foursquare* url slug.
+    categorie (Categorie): Venue categorie.
+    zone (Zone): Venue zone.
+    checkins (list of Checkin): Checkins in the Zone for many users.
+    creation_date (datetime): Venue creation datetime.
+    last_update (datetime): Venue last update datetime.
+    active (bool): If the Venue is active or not, default True.
+
+  '''
   id = models.AutoField(primary_key=True)
   name = models.CharField(max_length=255)
   lat = models.CharField(max_length=255)
@@ -608,16 +624,70 @@ class Venue(models.Model):
   last_update = models.DateTimeField(auto_now=True)
   active = models.BooleanField(default=True)
 
-  def __str__(self):
-    return self.name
+  def enable(self):
+    '''Sets the `active` attribute of the Venue to True.
+
+    '''
+    if not self.is_active:
+      self.active = True
+      self.save()
+
+  def disable(self):
+    '''Sets the `active` attribute of the Venue to False.
+
+    '''
+    if self.is_active:
+      self.active = False
+      self.save()
 
   @property
   def is_active(self):
+    '''Checks if the Venue is active.
+
+    Returns:
+      bool: True if active, False otherwise.
+
+    '''
     return self.active
 
   @property
   def num_checkins(self):
+    '''Gets the checkins number of the Venue.
+
+    Returns:
+      int: Checkins number.
+
+    '''
     return self.checkins.filter(venue=self).count()
+
+  def __str__(self):
+    '''Displays a human-readable representation of the Venue object.
+
+    Returns:
+      str: Human-readable representation of the Venue object.
+
+    '''
+    return self.name
+
+  @property
+  def related_checkins(self):
+    '''Gets checkins related to the Venue.
+
+    Returns:
+      QuerySet: Checkin objects related to the Venue.
+
+    '''
+    return self.checkin_set.all()
+
+  @property
+  def related_events(self):
+    '''Gets events related to the Venue.
+
+    Returns:
+      QuerySet: Event objects related to the Venue.
+
+    '''
+    return self.events.all()
 
 
 class Item(models.Model):
