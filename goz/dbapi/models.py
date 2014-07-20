@@ -1014,11 +1014,11 @@ class Event(models.Model):
     start_date (date): Event start d
     end_date (date): Event end date.
     status (str): Event status, select one of `STATUS_CHOICES`.
-    venue (Venue): Venue affected by the Event.
-    zone (Zone): Zone affected by the Event.
-    item (Item): Item affected by the Event.
-    categorie (Categorie): Categorie affected by the Event.
-    user (User): User affected by the Event.
+    venue (Venue, optional): Venue affected by the Event.
+    zone (Zone, optional): Zone affected by the Event.
+    item (Item, optional): Item affected by the Event.
+    categorie (Categorie, optional): Categorie affected by the Event.
+    user (User, optional): User affected by the Event.
     creation_date (datetime): Event creation datetime.
     last_update (datetime): Event last update datetime.
     active (bool): If the Event is active or not, default True.
@@ -1059,23 +1059,67 @@ class Event(models.Model):
   active = models.BooleanField(default=True)
 
   class Meta:
-    ordering = ['-status', 'end_date']
+    '''Event model metadata.
 
-  def __str__(self):
-    return self.name
+    Attributes:
+      ordering (list of str): Fields to order by in queries.
+
+    '''
+    ordering = ['-status', 'end_date']
 
   @property
   def is_active(self):
+    '''Checks if the Event is active.
+
+    Returns:
+      bool: True if active, False otherwise.
+
+    '''
     return self.active
 
   @property
   def is_expired(self):
-    return self.end_date < datetime.datetime.today() if self.end_date else None
+    '''Checks if the Event has expired or not.
+
+    Returns:
+      bool: True if has expired, False otherwise.
+
+    '''
+    is_expired = None
+    if self.end_date:
+      is_expired = self.end_date <= datetime.datetime.today().date()
+
+    return is_expired
 
   @property
   def is_started(self):
-    return self.start_date < datetime.datetime.today() if self.start_date else None
+    '''Checks if the Event has started or not.
+
+    Returns:
+      bool: True if has started, False otherwise.
+
+    '''
+    is_started = None
+    if self.start_date:
+      is_started = self.start_date <= datetime.datetime.today().date()
+
+    return is_started
 
   @property
   def is_live(self):
+    '''Checks if the Event is live or not.
+
+    Returns:
+      bool: True if is live, False otherwise.
+
+    '''
     return self.is_started and not self.is_expired
+
+  def __str__(self):
+    '''Displays a human-readable representation of the Event object.
+
+    Returns:
+      str: Human-readable representation of the Event object.
+
+    '''
+    return self.name
