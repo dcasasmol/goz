@@ -1,12 +1,12 @@
 BEGIN;
-CREATE TABLE "dbapi_user_friends" (
+CREATE TABLE IF NOT EXISTS "dbapi_user_friends" (
     "id" serial NOT NULL PRIMARY KEY,
     "from_user_id" integer NOT NULL,
     "to_user_id" integer NOT NULL,
     UNIQUE ("from_user_id", "to_user_id")
 )
 ;
-CREATE TABLE "dbapi_user" (
+CREATE TABLE IF NOT EXISTS "dbapi_user" (
     "id" serial NOT NULL PRIMARY KEY,
     "user_id" integer NOT NULL UNIQUE REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED,
     "username" varchar(255) NOT NULL UNIQUE,
@@ -27,7 +27,7 @@ CREATE TABLE "dbapi_user" (
 ;
 ALTER TABLE "dbapi_user_friends" ADD CONSTRAINT "from_user_id_refs_id_17f992f7" FOREIGN KEY ("from_user_id") REFERENCES "dbapi_user" ("id") DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE "dbapi_user_friends" ADD CONSTRAINT "to_user_id_refs_id_17f992f7" FOREIGN KEY ("to_user_id") REFERENCES "dbapi_user" ("id") DEFERRABLE INITIALLY DEFERRED;
-CREATE TABLE "dbapi_categorie" (
+CREATE TABLE IF NOT EXISTS "dbapi_categorie" (
     "id" serial NOT NULL PRIMARY KEY,
     "name" varchar(255) NOT NULL,
     "icon" varchar(255) NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE "dbapi_categorie" (
     "active" boolean NOT NULL
 )
 ;
-CREATE TABLE "dbapi_zone" (
+CREATE TABLE IF NOT EXISTS "dbapi_zone" (
     "id" serial NOT NULL PRIMARY KEY,
     "name" varchar(255) NOT NULL,
     "king_id" integer NOT NULL REFERENCES "dbapi_user" ("id") DEFERRABLE INITIALLY DEFERRED,
@@ -51,7 +51,7 @@ CREATE TABLE "dbapi_zone" (
     "active" boolean NOT NULL
 )
 ;
-CREATE TABLE "dbapi_venue" (
+CREATE TABLE IF NOT EXISTS "dbapi_venue" (
     "id" serial NOT NULL PRIMARY KEY,
     "name" varchar(255) NOT NULL,
     "lat" varchar(255) NOT NULL,
@@ -64,7 +64,7 @@ CREATE TABLE "dbapi_venue" (
     "active" boolean NOT NULL
 )
 ;
-CREATE TABLE "dbapi_item" (
+CREATE TABLE IF NOT EXISTS "dbapi_item" (
     "id" serial NOT NULL PRIMARY KEY,
     "name" varchar(255) NOT NULL,
     "description" varchar(255) NOT NULL,
@@ -80,7 +80,7 @@ CREATE TABLE "dbapi_item" (
     "active" boolean NOT NULL
 )
 ;
-CREATE TABLE "dbapi_badge" (
+CREATE TABLE IF NOT EXISTS "dbapi_badge" (
     "id" serial NOT NULL PRIMARY KEY,
     "name" varchar(255) NOT NULL,
     "description" varchar(255) NOT NULL,
@@ -92,7 +92,7 @@ CREATE TABLE "dbapi_badge" (
     "active" boolean NOT NULL
 )
 ;
-CREATE TABLE "dbapi_score" (
+CREATE TABLE IF NOT EXISTS "dbapi_score" (
     "id" serial NOT NULL PRIMARY KEY,
     "user_id" integer NOT NULL REFERENCES "dbapi_user" ("id") DEFERRABLE INITIALLY DEFERRED,
     "zone_id" integer NOT NULL REFERENCES "dbapi_zone" ("id") DEFERRABLE INITIALLY DEFERRED,
@@ -102,7 +102,7 @@ CREATE TABLE "dbapi_score" (
     UNIQUE ("user_id", "zone_id")
 )
 ;
-CREATE TABLE "dbapi_checkin" (
+CREATE TABLE IF NOT EXISTS "dbapi_checkin" (
     "id" serial NOT NULL PRIMARY KEY,
     "user_id" integer NOT NULL REFERENCES "dbapi_user" ("id") DEFERRABLE INITIALLY DEFERRED,
     "venue_id" integer NOT NULL REFERENCES "dbapi_venue" ("id") DEFERRABLE INITIALLY DEFERRED,
@@ -113,7 +113,7 @@ CREATE TABLE "dbapi_checkin" (
     UNIQUE ("user_id", "venue_id")
 )
 ;
-CREATE TABLE "dbapi_purchase" (
+CREATE TABLE IF NOT EXISTS "dbapi_purchase" (
     "id" serial NOT NULL PRIMARY KEY,
     "user_id" integer NOT NULL REFERENCES "dbapi_user" ("id") DEFERRABLE INITIALLY DEFERRED,
     "item_id" integer NOT NULL REFERENCES "dbapi_item" ("id") DEFERRABLE INITIALLY DEFERRED,
@@ -123,7 +123,7 @@ CREATE TABLE "dbapi_purchase" (
     UNIQUE ("user_id", "item_id")
 )
 ;
-CREATE TABLE "dbapi_unlocking" (
+CREATE TABLE IF NOT EXISTS "dbapi_unlocking" (
     "id" serial NOT NULL PRIMARY KEY,
     "user_id" integer NOT NULL REFERENCES "dbapi_user" ("id") DEFERRABLE INITIALLY DEFERRED,
     "badge_id" integer NOT NULL REFERENCES "dbapi_badge" ("id") DEFERRABLE INITIALLY DEFERRED,
@@ -132,18 +132,18 @@ CREATE TABLE "dbapi_unlocking" (
     UNIQUE ("user_id", "badge_id")
 )
 ;
-CREATE TABLE "dbapi_event" (
+CREATE TABLE IF NOT EXISTS "dbapi_event" (
     "id" serial NOT NULL PRIMARY KEY,
     "name" varchar(255) NOT NULL,
     "description" varchar(255) NOT NULL,
     "start_date" date NOT NULL,
     "end_date" date NOT NULL,
     "status" varchar(3) NOT NULL,
-    "venues_id" integer NOT NULL REFERENCES "dbapi_venue" ("id") DEFERRABLE INITIALLY DEFERRED,
-    "zones_id" integer NOT NULL REFERENCES "dbapi_zone" ("id") DEFERRABLE INITIALLY DEFERRED,
-    "items_id" integer NOT NULL REFERENCES "dbapi_item" ("id") DEFERRABLE INITIALLY DEFERRED,
-    "categories_id" integer NOT NULL REFERENCES "dbapi_categorie" ("id") DEFERRABLE INITIALLY DEFERRED,
-    "users_id" integer NOT NULL REFERENCES "dbapi_user" ("id") DEFERRABLE INITIALLY DEFERRED,
+    "venue_id" integer NOT NULL REFERENCES "dbapi_venue" ("id") DEFERRABLE INITIALLY DEFERRED,
+    "zone_id" integer NOT NULL REFERENCES "dbapi_zone" ("id") DEFERRABLE INITIALLY DEFERRED,
+    "item_id" integer NOT NULL REFERENCES "dbapi_item" ("id") DEFERRABLE INITIALLY DEFERRED,
+    "categorie_id" integer NOT NULL REFERENCES "dbapi_categorie" ("id") DEFERRABLE INITIALLY DEFERRED,
+    "user_id" integer NOT NULL REFERENCES "dbapi_user" ("id") DEFERRABLE INITIALLY DEFERRED,
     "creation_date" timestamp with time zone NOT NULL,
     "last_update" timestamp with time zone NOT NULL,
     "active" boolean NOT NULL

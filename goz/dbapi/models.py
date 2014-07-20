@@ -999,6 +999,31 @@ class Unlocking(models.Model):
 
 
 class Event(models.Model):
+  '''This class models a *Game of Zones* event.
+
+  An event is an offer for a certain time that can affect venues, zones, items,
+  categories or users.
+
+  Attributes:
+    ON_EVENT (str): On event status database token.
+    OFF_EVENT (str): Off event status database token.
+    STATUS_CHOICES (tuple): Event status choices.
+    id (int): Event id.
+    name (str): Event name.
+    description (str): Event description.
+    start_date (date): Event start d
+    end_date (date): Event end date.
+    status (str): Event status, select one of `STATUS_CHOICES`.
+    venue (Venue): Venue affected by the Event.
+    zone (Zone): Zone affected by the Event.
+    item (Item): Item affected by the Event.
+    categorie (Categorie): Categorie affected by the Event.
+    user (User): User affected by the Event.
+    creation_date (datetime): Event creation datetime.
+    last_update (datetime): Event last update datetime.
+    active (bool): If the Event is active or not, default True.
+
+  '''
   ON_EVENT = 'on'
   OFF_EVENT = 'off'
   STATUS_CHOICES = (
@@ -1014,19 +1039,19 @@ class Event(models.Model):
   status = models.CharField(max_length=3,
                             choices=STATUS_CHOICES,
                             default=OFF_EVENT)
-  venues = models.ForeignKey(Venue, blank=True,
+  venue = models.ForeignKey(Venue, blank=True,
                             related_name='events',
                             related_query_name='event')
-  zones = models.ForeignKey(Zone, blank=True,
+  zone = models.ForeignKey(Zone, blank=True,
                             related_name='events',
                             related_query_name='event')
-  items = models.ForeignKey(Item, blank=True,
+  item = models.ForeignKey(Item, blank=True,
                             related_name='events',
                             related_query_name='event')
-  categories = models.ForeignKey(Categorie, blank=True,
+  categorie = models.ForeignKey(Categorie, blank=True,
                             related_name='events',
                             related_query_name='event')
-  users = models.ForeignKey(User, blank=True,
+  user = models.ForeignKey(User, blank=True,
                             related_name='events',
                             related_query_name='event')
   creation_date = models.DateTimeField(auto_now_add=True)
