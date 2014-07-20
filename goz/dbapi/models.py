@@ -900,6 +900,19 @@ class Checkin(models.Model):
 
 
 class Purchase(models.Model):
+  '''This class is an intermediate model between User and Item.
+
+  Store the numbers of items bought by an user.
+
+  Attributes:
+    id (int): Purchase id.
+    user (User): User who purchase.
+    item (Item): Item purchased.
+    number (int): Checkins number made, default 0.
+    creation_date (datetime): Purchase creation datetime.
+    last_update (datetime): Purchase last update datetime.
+
+  '''
   id = models.AutoField(primary_key=True)
   user = models.ForeignKey(User,
                           related_name='purchases',
@@ -910,18 +923,37 @@ class Purchase(models.Model):
   last_update = models.DateTimeField(auto_now=True)
 
   class Meta:
+    '''Purchase model metadata.
+
+    Attributes:
+      unique_together (tuple): Tuple of fields which must be unique.
+      ordering (list of str): Fields to order by in queries.
+
+    '''
     unique_together = ('user', 'item')
     ordering = ['user', '-number']
 
-  def __str__(self):
-    return '%s:%s [%s]' % (self.user, self.item, self.number)
-
   @property
   def is_expired(self):
+    '''Checks if the Purchase has expired or not.
+
+    Returns:
+      bool: True if has expired, False otherwise.
+
+    '''
     today = datetime.datetime.today()
     delta = datetime.timedelta(days=self.item.duration)
 
     return (self.creation_date + delta) < today if self.creation_date else None
+
+  def __str__(self):
+    '''Displays a human-readable representation of the Purchase object.
+
+    Returns:
+      str: Human-readable representation of the Purchase object.
+
+    '''
+    return '%s:%s [%s]' % (self.user, self.item, self.number)
 
 
 class Unlocking(models.Model):
