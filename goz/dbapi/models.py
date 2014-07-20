@@ -846,7 +846,7 @@ class Score(models.Model):
 class Checkin(models.Model):
   '''This class is an intermediate model between User and Venue.
 
-  Store the numbers of checkins made by an user in a zone.
+  Store the number of checkins made by an user in a zone.
 
   Attributes:
     id (int): Checkin id.
@@ -902,13 +902,13 @@ class Checkin(models.Model):
 class Purchase(models.Model):
   '''This class is an intermediate model between User and Item.
 
-  Store the numbers of items bought by an user.
+  Store the number of items bought by an user.
 
   Attributes:
     id (int): Purchase id.
     user (User): User who purchase.
     item (Item): Item purchased.
-    number (int): Checkins number made, default 0.
+    number (int): Number of items purchased, default 0.
     creation_date (datetime): Purchase creation datetime.
     last_update (datetime): Purchase last update datetime.
 
