@@ -5,6 +5,7 @@ import urllib
 import logging
 import datetime
 
+from .config import FS_API_BASE_URL
 from .exceptions import EndpointError
 from goz.settings import LOGGER_NAME
 
@@ -12,13 +13,39 @@ logger = logging.getLogger(LOGGER_NAME)
 
 
 class FsApi:
+  '''This class models a client to make request to the *Foursquare* API.
 
+  '''
   def __init__(self, access_token):
-    self.base_url = 'https://api.foursquare.com/v2'
+    '''Create the `FsApi` object and set the attributes.
+
+    Args:
+      access_token (str): *Foursquare* api access token.
+
+    Attributes:
+      base_url (str): *Foursquare* api base url.
+      datetime (str): Today date.
+      access_token (str): *Foursquare* api access token.
+
+    '''
+    self.base_url = FS_API_BASE_URL
     self.datetime = datetime.datetime.now().strftime("%Y%m%d")
     self.access_token = access_token
 
-  def __build_url(self, endpoint=None, params={}):
+  def _build_url(self, endpoint=None, params={}):
+    '''Builds a url to make a request to the *Foursquare* API.
+
+    Args:
+      endpoint (str): API endpoint, default None.
+      params (dict): Params to encode in the API request.
+
+    Returns:
+      str: Url of the *Foursquare* API to make a request.
+
+    Raises:
+      EndpointError: If `endpoint` is None.
+
+    '''
     if not endpoint:
       raise EndpointError
 
@@ -27,21 +54,44 @@ class FsApi:
     return '%s/%s?%s' % (self.base_url, endpoint, encoded_params)
 
   def request(self, endpoint=None, params={}):
+    '''Makes a request to the *Foursquare* API.
+
+    Args:
+      endpoint (str): API endpoint, default None.
+      params (dict): Params to encode in the API request.
+
+    Returns:
+      dict: JSON response of the *Foursquare* API.
+
+    '''
     try:
+
       params['oauth_token'] = self.access_token
       params['v'] = self.datetime
 
-      url = self.__build_url(endpoint, params)
+      url = self._build_url(endpoint, params)
 
       request = urllib.request.urlopen(url)
       response = request.read()
       json_response = json.loads(response.decode(), encoding='utf8')
 
       return json_response
+
     except Exception as e:
+
       raise e
 
   def get_user_info(self):
+    '''Gets the user info from *Foursquare* API.
+
+    Returns:
+      dict: User info with using this format::
+        {
+          'meta': Request info,
+          'response': User info
+        }
+
+    '''
     response = self.request('users/self')
 
     user_info = {}
