@@ -957,6 +957,18 @@ class Purchase(models.Model):
 
 
 class Unlocking(models.Model):
+  '''This class is an intermediate model between User and Badge.
+
+  Store the number of badges unlocked by an user.
+
+  Attributes:
+    id (int): Unlocking id.
+    user (User): User who unlock.
+    badge (Badge): Badge unlocked.
+    creation_date (datetime): Unlocking creation datetime.
+    last_update (datetime): Unlocking last update datetime.
+
+  '''
   id = models.AutoField(primary_key=True)
   user = models.ForeignKey(User,
                           related_name='badges',
@@ -966,10 +978,23 @@ class Unlocking(models.Model):
   last_update = models.DateTimeField(auto_now=True)
 
   class Meta:
+    '''Unlocking model metadata.
+
+    Attributes:
+      unique_together (tuple): Tuple of fields which must be unique.
+      ordering (list of str): Fields to order by in queries.
+
+    '''
     unique_together = ('user', 'badge')
     ordering = ['user', '-creation_date']
 
   def __str__(self):
+    '''Displays a human-readable representation of the Unlocking object.
+
+    Returns:
+      str: Human-readable representation of the Unlocking object.
+
+    '''
     return '%s:%s' % (self.user, self.item)
 
 
