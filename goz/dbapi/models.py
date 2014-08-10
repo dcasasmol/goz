@@ -177,6 +177,19 @@ class User(models.Model):
     return self.user.is_active if self.user_id else False
 
   @property
+  def is_logged(self):
+    '''Checks if the user is logged in the system.
+
+    Note:
+      Uses `is_authenticated` method of Django User model.
+
+    Returns:
+      bool: True if successful, False otherwise.
+
+    '''
+    return self.user.is_authenticated() if self.user_id else False
+
+  @property
   def is_female(self):
     '''Checks if the user is female.
 
